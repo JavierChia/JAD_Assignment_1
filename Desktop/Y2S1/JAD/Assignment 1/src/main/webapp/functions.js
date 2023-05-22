@@ -13,6 +13,26 @@ function addedAlert() {
   }, 1000);
 }
 
+function registerAlert() {
+	$(".registered").removeClass("hide");
+  $(".registered").addClass("show");
+  $(".registered").addClass("showAlert");
+  setTimeout(function () {
+    $(".registered").addClass("hide");
+    $(".registered").removeClass("show");
+  }, 800);
+}
+
+function registerAlert() {
+  $(".registered").removeClass("hide");
+  $(".registered").addClass("show");
+  $(".registered").addClass("showAlert");
+  setTimeout(function () {
+    $(".registered").addClass("hide");
+    $(".registered").removeClass("show");
+  }, 800);
+}
+
 function login2Alert() {
   $(".loginAlert").removeClass("hide");
   $(".loginAlert").addClass("show");

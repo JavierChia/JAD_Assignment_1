@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * Servlet implementation class VerifyUserServlet
@@ -57,8 +58,7 @@ public class VerifyUserServlet extends HttpServlet {
 				last_name = rs.getString("last_name");
 				role = rs.getString("role");
 				id = rs.getInt("id");
-				out.println(email + password + rs.getString("password"));
-				if(password.equals(rs.getString("password"))){
+				if(BCrypt.checkpw(password,rs.getString("password"))){
 					session.setAttribute("sessUserID", id);
 					session.setAttribute("sessUserRole", role);
 					session.setAttribute("sessUserName", first_name + ' ' + last_name);

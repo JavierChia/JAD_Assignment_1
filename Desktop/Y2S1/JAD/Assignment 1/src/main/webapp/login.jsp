@@ -14,11 +14,12 @@
             	out.print("loginAlert();");
             } else if (message !=null && message.equals("loggedOut")){
             	out.print("logoutAlert();");
+            } else if (message !=null && message.equals("validRegistration")){
+            	out.print("registerAlert();");
             }
        		 %>
         })
     </script>
-    
 </head>
 
 <body>
@@ -37,6 +38,11 @@
         <span class="msg">Successfully logged out!</span>
     </div>
     
+    <div class='registered hide'>
+        <span class="fa-solid fa-circle-check"></span>
+        <span class="msg">Successfully registered!</span>
+    </div>
+    
     <div class="navbar">
         <h2 class="logo"><a href="home.html">SP BookStore</a></h2>
 
@@ -45,7 +51,7 @@
             <a id="cart" style="cursor: pointer;" class="navLink">Shopping Cart</a>
             <a id="admin" class="navLink">Admin</a>
             <% if (message != null && message.equals("validLogin")) { %>
-            	<form action='/ST0510_JAD_Assignment_1/logout' class=logoutForm>
+            	<form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class=logoutForm>
             		<button type="submit" class="btnLogin" id="btnLogin">Logout</button>
             	</form>
     		<% } else { %>
@@ -103,19 +109,26 @@
 
         <div class="form-box register">
             <h2>Registration</h2>
-            <form action="/ST0510_JAD_Assignment_1/VerifyUserServlet">
+            <form action="/ST0510_JAD_Assignment_1/RegisterUserServlet">
                 <div class="input-box">
                     <span class="icon">
                         <i class="fa-solid fa-user"></i>
                     </span>
-                    <input type="text" required>
-                    <label>Username</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                    <label>First Name</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+                    <input type="text" id="lastName" name="lastName" required>
+                    <label>Last Name</label>
                 </div>
                 <div class="input-box">
                     <span class="icon">
                         <i class="fa-solid fa-envelope"></i>
                     </span>
-                    <input type="email" required>
+                    <input type="email" id="email" name="registerEmail" required>
                     <label>Email</label>
                 </div>
 
@@ -123,7 +136,7 @@
                     <span class="icon">
                         <i class="fa-solid fa-lock"></i>
                     </span>
-                    <input type="password" required>
+                    <input type="password" id="password" name="registerPassword" required>
                     <label>Password</label>
                 </div>
 

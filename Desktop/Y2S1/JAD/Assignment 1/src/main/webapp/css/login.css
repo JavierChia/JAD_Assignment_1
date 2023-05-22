@@ -87,6 +87,79 @@ Admission Number: 2227931
     color: #333
 }
 
+/*Register Alert*/
+.registered {
+    background: #f0f0f0;
+    padding: 20px 40px;
+    min-width: 420px;
+    position:absolute;
+    top:0px;
+    overflow: hidden;
+    border-radius: 4px;
+    border-left: 8px solid #4de800;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.registered.showAlert {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.registered.show {
+    animation: registered_show_slide 1s ease forwards;
+}
+
+@keyframes registered_show_slide {
+    0% {
+        transform: translateY(-100%);
+    }
+    33% {
+        transform: translateY(36%);
+    }
+    66% {
+        transform: translateY(26%);
+    }
+    100% {
+        transform: translateY(30%);
+    }
+}
+
+.registered.hide {
+    animation: registered_hide_slide 1s ease forwards;
+}
+
+@keyframes registered_hide_slide {
+    0% {
+        transform: translateY(30%);
+    }
+    33% {
+        transform: translateY(26%)
+    }
+    66% {
+        transform: translateY(36%)
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+.registered .fa-circle-check{
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #4de800;
+    font-size: 30px;
+}
+
+.registered .msg {
+    padding: 0 20px;
+    font-size: 18px;
+    color: #333
+}
+
 /*AlertCart Styles*/
 .alertCart {
     background: #f0f0f0;
@@ -597,7 +670,7 @@ body {
 }
 
 .wrapper.active {
-    height: 520px;
+    height: 580px;
 }
 
 .wrapper .form-box {
