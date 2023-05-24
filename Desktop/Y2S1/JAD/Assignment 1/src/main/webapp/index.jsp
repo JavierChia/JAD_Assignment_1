@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
@@ -44,10 +44,10 @@
     </div>
     
     <div class="navbar">
-        <h2 class="logo"><a href="home.html">SP BookStore</a></h2>
+        <h2 class="logo"><a href="index.jsp">SP BookStore</a></h2>
 
         <nav class="navigation">
-            <a href="home.jsp" class="navLink">Home</a>
+            <a href="books.jsp" class="navLink">Books</a>
             <a id="cart" style="cursor: pointer;" class="navLink">Shopping Cart</a>
             <a id="admin" class="navLink">Admin</a>
             <% if (message != null && message.equals("validLogin")) { %>
@@ -67,7 +67,7 @@
             enjoyable experience. Browse our online inventory and purchase any film you like!
         </div>
 
-        <a href="homePage.html"><button class="startBrowsing">Start Browsing!</button></a>
+        <a href="books.jsp"><button class="startBrowsing">Start Browsing!</button></a>
     </div>
 
     <!--LOGIN & REGISTER-->
@@ -147,11 +147,9 @@
                 </div>
             </form>
         </div>
-
-
     </div>
-    <script src="functions.js"></script>
-    <script src="script.js"></script>
+    <script src="./js/functions.js"></script>
+    <script src="./js/script.js"></script>
 </body>
 
 </html>

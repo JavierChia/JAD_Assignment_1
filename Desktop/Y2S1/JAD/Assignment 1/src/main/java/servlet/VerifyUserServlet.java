@@ -62,9 +62,9 @@ public class VerifyUserServlet extends HttpServlet {
 					session.setAttribute("sessUserID", id);
 					session.setAttribute("sessUserRole", role);
 					session.setAttribute("sessUserName", first_name + ' ' + last_name);
-					response.sendRedirect("/ST0510_JAD_Assignment_1/login.jsp?statusCode=validLogin");
+					response.sendRedirect("/ST0510_JAD_Assignment_1/index.jsp?statusCode=validLogin");
 				} else {
-					response.sendRedirect("/ST0510_JAD_Assignment_1/login.jsp?statusCode=invalidLogin");
+					response.sendRedirect("/ST0510_JAD_Assignment_1/index.jsp?statusCode=invalidLogin");
 				}
 			}
 			// Step 7: Close connection

@@ -35,7 +35,7 @@ public class LogoutUserServlet extends HttpServlet {
         }
 
         // Redirect the user to the login page
-        response.sendRedirect(request.getContextPath() + "/login.jsp?statusCode=loggedOut");
+        response.sendRedirect(request.getContextPath() + "/index.jsp?statusCode=loggedOut");
 
 	}
 

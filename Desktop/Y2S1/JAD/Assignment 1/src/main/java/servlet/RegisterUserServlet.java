@@ -57,9 +57,9 @@ public class RegisterUserServlet extends HttpServlet {
 			int rowsAffected = statement.executeUpdate();
 
 		    if (rowsAffected == 1) {
-		        response.sendRedirect("/ST0510_JAD_Assignment_1/login.jsp?statusCode=validRegistration&hashedpw="+hashedPassword);
+		        response.sendRedirect("/ST0510_JAD_Assignment_1/index.jsp?statusCode=validRegistration&hashedpw="+hashedPassword);
 		    } else {
-		    	response.sendRedirect("/ST0510_JAD_Assignment_1/login.jsp?statusCode=invalidRegistration");
+		    	response.sendRedirect("/ST0510_JAD_Assignment_1/index.jsp?statusCode=invalidRegistration");
 		    }
 			// Step 7: Close connection
 			conn.close();
