@@ -72,8 +72,9 @@ public class GetBooksServlet extends HttpServlet {
 	 			String date = rs.getString("publication_date");
 	 			String isbn = rs.getString("isbn");
 	 			String genre = rs.getString("genre");
+	 			int rating = rs.getInt("rating");
 	 			out.print(title);
-	 			books.add(new Book(id,title,author,price,quantity,publisher,date,isbn,genre));
+	 			books.add(new Book(id,title,author,price,quantity,publisher,date,isbn,genre, rating));
 	 		}
 	 		HttpSession session = request.getSession();
 	 		session.setAttribute("books", books);

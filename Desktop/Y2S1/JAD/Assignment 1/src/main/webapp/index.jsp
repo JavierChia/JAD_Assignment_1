@@ -47,7 +47,7 @@
         <h2 class="logo"><a href="index.jsp">SP BookStore</a></h2>
 
         <nav class="navigation">
-            <a href="books.jsp" class="navLink">Books</a>
+            <a href="/ST0510_JAD_Assignment_1/GetBooksServlet" class="navLink">Books</a>
             <a id="cart" style="cursor: pointer;" class="navLink">Shopping Cart</a>
             <a id="admin" class="navLink">Admin</a>
             <% if (message != null && message.equals("validLogin")) { %>
@@ -67,7 +67,7 @@
             enjoyable experience. Browse our online inventory and purchase any film you like!
         </div>
 
-        <a href="books.jsp"><button class="startBrowsing">Start Browsing!</button></a>
+        <a href="/ST0510_JAD_Assignment_1/GetBooksServlet"><button class="startBrowsing">Start Browsing!</button></a>
     </div>
 
     <!--LOGIN & REGISTER-->

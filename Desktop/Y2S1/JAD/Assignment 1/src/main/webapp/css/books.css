@@ -517,6 +517,7 @@ body {
     justify-content: space-between;
     align-items: center;
     z-index: 99 ;
+    background-color: #fff;
 }
 
 .logo a {
@@ -590,15 +591,15 @@ body {
 }
 /*DESCRIPTION STYLE*/
 .description-container {
+	overflow: scroll;
+    height: 100vh;
+}
+.main-container {
     font-size: 1.5em;
     font-weight: 600;
     width: 100%;
-    margin: 0 auto;
+    margin-top: 100px;
     text-align: center;
-    position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     z-index:1;
 }
 
@@ -607,7 +608,7 @@ body {
 }
 
 /*Start Browsing Button Style*/
-.description-container a {
+.main-container a {
     text-decoration: none;
 }
 .startBrowsing {
@@ -825,7 +826,7 @@ input:-webkit-autofill:active{
     text-decoration: underline;
 }
 
-.top-row {
+.bottom-row {
     text-align: center;
     margin-top: 40px;
     display: block;
@@ -976,17 +977,18 @@ input:-webkit-autofill:active{
 	width:15%;
 }
 
-/*Card Styles*/
 .card-container {
 	width: 100%;
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-between;
 	padding: 30px 50px;
+	margin-top: 10px;
 }
 .card {
         width: 280px;
         padding: 20px;
+        margin-bottom: 40px;
         border: 1px solid #ccc;
         border-radius: 5px;
         text-align: center;
@@ -1007,11 +1009,14 @@ input:-webkit-autofill:active{
     }
 
     .card h3 {
+        white-space: nowrap; /* Prevent line breaks */
+        overflow: hidden; /* Hide overflowing content */
+        text-overflow: ellipsis; /* Add ellipsis */
         font-size: 18px;
         margin-bottom: 10px;
     }
 
-    .card p {
+    .card .author {
         font-size: 14px;
         color: #888;
         margin-bottom: 8px;
@@ -1039,3 +1044,10 @@ input:-webkit-autofill:active{
     .card button:hover {
         background-color: #45a049;
     }
+    
+    .price {
+    font-weight: bold;
+    color: #333; /* Adjust the color to your preference */
+    font-size: 16px;
+    margin-bottom: 16px; /* Adjust the font size to your preference */
+	}

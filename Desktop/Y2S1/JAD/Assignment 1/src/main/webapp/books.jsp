@@ -26,14 +26,9 @@
 </head>
 
 <body>
-<%@page import ="java.util.*"%>
-<%@page import ="books.Book"%>
-<%
-ArrayList<Book> books = (ArrayList<Book>) session.getAttribute("books");
-for (int i = 0; i < books.size(); i++) {
-	out.print(books.get(i).getTitle());
-}
-%>
+<%@page import="java.util.*"%>
+<%@page import="books.Book"%>
+
 </body>
 	<div class='loginAlert hide'>
         <span class="fa-solid fa-circle-exclamation"></span>
@@ -59,7 +54,7 @@ for (int i = 0; i < books.size(); i++) {
         <h2 class="logo"><a href="index.jsp">SP BookStore</a></h2>
 
         <nav class="navigation">
-            <a href="books.jsp" class="navLink">Books</a>
+            <a href="/ST0510_JAD_Assignment_1/GetBooksServlet" class="navLink">Books</a>
             <a id="cart" style="cursor: pointer;" class="navLink">Shopping Cart</a>
             <a id="admin" class="navLink">Admin</a>
             <% if (message != null && message.equals("validLogin")) { %>
@@ -73,107 +68,59 @@ for (int i = 0; i < books.size(); i++) {
     </div>
     
     <div class="description-container">
-        <div class="title">Search for a DVD!</div>
-
-        <div class="top-row">
-            <div class="genre-container" style="display: inline-block;">
-                <div class="dropdown">
-                    <div class="select">
-                        <span class="selected">Genre</span>
-                        <div class="caret"></div>
-                    </div>
-                    <ul class="menu" id="genre-names">
-                    </ul>
-                </div>
-            </div>
-
-            <div class="title-bar-container" style="display: inline-block;">
-                <input type="text" class="title-bar" placeholder="Enter a title!" id="title">
-            </div>
-             
-            <div class="submit-container" style="display: inline-block;">
-                <button type="submit" class="submit-button" id="search">Search</button>
-            </div>
-    	</div>
-    	
-    	<div class ="card-container">
-	    	<div class="card">
-			    <img src="placeholder-image.jpg" alt="Book Cover">
-			    <h3>Title</h3>
-			    <p>Author</p>
-			    <div class="rating">
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star-half-alt"></i>
-			    </div>
-			    <p>Price: $XX.XX</p>
-			    <button class="btn">Add to Cart</button>
+	    <div class="main-container">
+	        <div class="sub-container-1">
+	            <div class="title">Search for a DVD!</div>
+	
+	            <div class="bottom-row">
+	                <div class="genre-container" style="display: inline-block;">
+	                    <div class="dropdown">
+	                        <div class="select">
+	                            <span class="selected">Genre</span>
+	                            <div class="caret"></div>
+	                        </div>
+	                        <ul class="menu" id="genre-names">
+	                        </ul>
+	                    </div>
+	                </div>
+	    
+	                <div class="title-bar-container" style="display: inline-block;">
+	                    <input type="text" class="title-bar" placeholder="Enter a title!" id="title">
+	                </div>
+	                 
+	                <div class="submit-container" style="display: inline-block;">
+	                    <button type="submit" class="submit-button" id="search">Search</button>
+	                </div>
+	            </div>
 			</div>
-			
-			<div class="card">
-			    <img src="placeholder-image.jpg" alt="Book Cover">
-			    <h3>Title</h3>
-			    <p>Author</p>
-			    <div class="rating">
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star-half-alt"></i>
-			    </div>
-			    <p>Price: $XX.XX</p>
-			    <button class="btn">Add to Cart</button>
-			</div>
-			
-			<div class="card">
-			    <img src="placeholder-image.jpg" alt="Book Cover">
-			    <h3>Title</h3>
-			    <p>Author</p>
-			    <div class="rating">
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star-half-alt"></i>
-			    </div>
-			    <p>Price: $XX.XX</p>
-			    <button class="btn">Add to Cart</button>
-			</div>
-			
-			<div class="card">
-			    <img src="placeholder-image.jpg" alt="Book Cover">
-			    <h3>Title</h3>
-			    <p>Author</p>
-			    <div class="rating">
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star-half-alt"></i>
-			    </div>
-			    <p>Price: $XX.XX</p>
-			    <button class="btn">Add to Cart</button>
-			</div>
-			
-			<div class="card">
-			    <img src="placeholder-image.jpg" alt="Book Cover">
-			    <h3>Title</h3>
-			    <p>Author</p>
-			    <div class="rating">
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star"></i>
-			        <i class="fas fa-star-half-alt"></i>
-			    </div>
-			    <p>Price: $XX.XX</p>
-			    <button class="btn">Add to Cart</button>
-			</div>
-   	 	</div>
-    </div>
-    
+	        <div class="sub-container-2">
+	            <div class ="card-container">
+		    	<%	
+				    ArrayList<Book> books = (ArrayList<Book>) session.getAttribute("books");
+				    for (int i = 0; i < books.size(); i++) {
+				        Book book = books.get(i);
+				%>
+					<div class="card">
+					    <img src="placeholder-image.jpg" alt="Book Cover">
+					    <h3><%=book.getTitle()%></h3>
+					    <p class="author"><%=book.getAuthor()%></p>
+					    <div class="rating">
+					        <% for (int j = 0; j < book.getRating(); j++) { %>
+					            <i class="fas fa-star"></i>
+					        <% }
+					           for (int j = book.getRating(); j < 5; j++) { %>
+					            <i class="far fa-star"></i>
+					        <% } %>
+					        	
+					    </div>
+					    <p class="price">Price: $<%=book.getPrice()%></p>
+					    <button class="btn">Add to Cart</button>
+					</div>
+				<% } %>
+	   	 		</div>
+	    	</div>
+		</div>
+	</div>
     <!--LOGIN & REGISTER-->
     <div class="wrapper-container">
 	    <div class="wrapper">

@@ -10,9 +10,10 @@ public class Book {
 	private String date;
 	private String isbn;
 	private String genre;
+	private int rating;
 	
 	public Book(int id, String title, String author, double price, int quantity, String publisher, String date,
-			String isbn, String genre) {
+			String isbn, String genre, int rating) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -23,6 +24,7 @@ public class Book {
 		this.date = date;
 		this.isbn = isbn;
 		this.genre = genre;
+		this.rating = rating;
 	}
 
 	public int getId() {
@@ -67,6 +69,10 @@ public class Book {
 
 	public String getPublisher() {
 		return publisher;
+	}
+	
+	public int getRating() {
+		return rating;
 	}
 
 	public void setPublisher(String publisher) {
