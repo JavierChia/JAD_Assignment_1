@@ -4,9 +4,16 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Display all books</title>
 </head>
 <body>
-
+<%@page import ="java.util.*"%>
+<%@page import ="books.Book"%>
+<%
+ArrayList<Book> books = (ArrayList<Book>) session.getAttribute("books");
+for (int i = 0; i < books.size(); i++) {
+	out.print(books.get(i).getTitle());
+}
+%>
 </body>
 </html>
