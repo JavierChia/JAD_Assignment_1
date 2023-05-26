@@ -114,6 +114,7 @@
 					        	
 					    </div>
 					    <p class="price">Price: $<%=book.getPrice()%></p>
+					    <p class="price">Price: $<%=book.getGenre()%></p>
 					    <button class="btn">Add to Cart</button>
 					</div>
 				<% } %>

@@ -56,8 +56,19 @@ public class GetBooksServlet extends HttpServlet {
 	 		
 	 		// Step 5: Execute SQL Command
 	 		String sqlStr = "SELECT * FROM books";
+	 		String[] genres = request.getParameterValues("genres");
+	 		if (genres != null) {
+	 			sqlStr += " WHERE genre LIKE ?";
+	 			for (int i = 1; i < genres.length; i++) {
+	 				sqlStr += " AND genre LIKE ?";
+	 			}
+	 		}
 	 		PreparedStatement statement = conn.prepareStatement(sqlStr);
-	 		// statement.setString(1,user);
+	 		if (genres != null) {
+	 			for (int i = 0; i < genres.length; i++) {
+	 				statement.setString(i+1, "%"+genres[i]+"%");
+	 			}
+	 		}
 	 		ResultSet rs = statement.executeQuery();
 	 		
 	 		// Step 6: Process Result
