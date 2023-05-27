@@ -39,7 +39,7 @@ public class GetBooksServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
-		
+		String sqlStr = "test";
 		try {
 			
 			//Step 1
@@ -55,19 +55,34 @@ public class GetBooksServlet extends HttpServlet {
 	 		Statement stmt = conn.createStatement();
 	 		
 	 		// Step 5: Execute SQL Command
-	 		String sqlStr = "SELECT * FROM books";
+	 		sqlStr = "SELECT * FROM books";
 	 		String[] genres = request.getParameterValues("genres");
+	 		String searchTitle = request.getParameter("title");
 	 		if (genres != null) {
 	 			sqlStr += " WHERE genre LIKE ?";
 	 			for (int i = 1; i < genres.length; i++) {
 	 				sqlStr += " AND genre LIKE ?";
 	 			}
 	 		}
+	 		if (genres != null && searchTitle != null) {
+	 			sqlStr += " AND title LIKE ?";
+	 		}
+	 		if (genres == null && searchTitle != null) {
+	 			sqlStr += " WHERE title LIKE ?";
+	 		}
+	 		log(sqlStr);
 	 		PreparedStatement statement = conn.prepareStatement(sqlStr);
+	 		int index = 0;
 	 		if (genres != null) {
-	 			for (int i = 0; i < genres.length; i++) {
-	 				statement.setString(i+1, "%"+genres[i]+"%");
+	 			for (index = 0; index < genres.length; index++) {
+	 				statement.setString(index+1, "%"+genres[index]+"%");
 	 			}
+	 		}
+	 		if (genres != null && searchTitle != null) {
+	 			statement.setString(index+1, "%"+searchTitle+"%");
+	 		}
+	 		if (genres == null && searchTitle != null) {
+	 			statement.setString(1, "%"+searchTitle+"%");
 	 		}
 	 		ResultSet rs = statement.executeQuery();
 	 		
@@ -95,6 +110,7 @@ public class GetBooksServlet extends HttpServlet {
 	 		
 	 	} catch (Exception e) {
 	 		out.println("Error: " + e);
+	 		out.println(sqlStr);
 	 	}
 	}
 
