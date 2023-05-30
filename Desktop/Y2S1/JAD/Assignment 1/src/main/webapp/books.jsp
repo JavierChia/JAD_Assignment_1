@@ -28,6 +28,7 @@
 <body>
 <%@page import="java.util.*"%>
 <%@page import="books.Book"%>
+<%@page import="books.BookGenre" %>
 
 </body>
 	<div class='loginAlert hide'>
@@ -73,24 +74,58 @@
 	            <div class="title">Search for a DVD!</div>
 	
 	            <div class="bottom-row">
-	                <div class="genre-container" style="display: inline-block;">
-	                    <div class="dropdown">
-	                        <div class="select">
-	                            <span class="selected">Genre</span>
-	                            <div class="caret"></div>
-	                        </div>
-	                        <ul class="menu" id="genre-names">
-	                        </ul>
-	                    </div>
-	                </div>
-	    
-	                <div class="title-bar-container" style="display: inline-block;">
-	                    <input type="text" class="title-bar" placeholder="Enter a title!" id="title">
-	                </div>
-	                 
-	                <div class="submit-container" style="display: inline-block;">
-	                    <button type="submit" class="submit-button" id="search">Search</button>
-	                </div>
+		            <form action="/ST0510_JAD_Assignment_1/GetBooksServlet">
+					    <div class="genre-container" style="display: inline-block;">
+					        <% 
+					        String[] selectedGenres = request.getParameterValues("genre");
+					        if (selectedGenres == null) {
+					            selectedGenres = new String[0]; // Set an empty array if no genres are selected
+					        }
+					        %>
+					        
+					        <div class="dropdown">
+					            <div class="select">
+					                <span class="selected">
+					                    Genre
+					                </span>
+					                <div class="caret"></div>
+					            </div>
+					            <ul class="menu" id="genre-names">
+					                <% 
+					                ArrayList<BookGenre> allGenres = (ArrayList<BookGenre>) session.getAttribute("genres");
+					                for (int i = 0; i < allGenres.size(); i++) { 
+					                    BookGenre genre = allGenres.get(i);
+					                    boolean isSelected = Arrays.asList(selectedGenres).contains(String.valueOf(genre.getGenreId()));
+					                %>
+					                <li value="<%= genre.getGenreId() %>" class="<%= isSelected ? "active2" : "" %>">
+					                    <%= genre.getGenreName() %>
+					                    <input type="checkbox" name="genre" value="<%= genre.getGenreId() %>" class="hidden-checkbox" <%= isSelected ? "checked" : "" %>>
+					                </li>
+					                <% } %>
+					            </ul>
+					        </div>
+					    </div>
+					
+					    <div class="title-bar-container" style="display: inline-block;">
+					        <input type="text" class="title-bar" placeholder="Enter a title!" id="title" name="title">
+					    </div>
+					    
+					    <div class="submit-container" style="display: inline-block;">
+					        <button type="submit" class="submit-button" id="search">Search</button>
+					    </div>
+					</form>
+					
+					<script>
+					    // Add click event listener to the list items
+					    var listItems = document.querySelectorAll("#genre-names li");
+					    listItems.forEach(function(item) {
+					        item.addEventListener("click", function() {
+					            var checkbox = this.querySelector("input[type='checkbox']");
+					            checkbox.checked = !checkbox.checked;
+					        });
+					    });
+					</script>
+
 	            </div>
 			</div>
 	        <div class="sub-container-2">
@@ -104,6 +139,17 @@
 					    <img src="placeholder-image.jpg" alt="Book Cover">
 					    <h3><%=book.getTitle()%></h3>
 					    <p class="author"><%=book.getAuthor()%></p>
+					    <div class="genres">
+						    <% String[] genres = book.getGenre(); %>
+						    <% for (int k = 0; k < genres.length; k++) { %>
+						        <span class="genre"><%= genres[k] %></span>
+						        <% if (k < genres.length - 1) { %>
+						            <span class="dot">&bull;</span>
+						        <% } %>
+						    <% } %>
+						</div>
+
+
 					    <div class="rating">
 					        <% for (int j = 0; j < book.getRating(); j++) { %>
 					            <i class="fas fa-star"></i>
@@ -114,7 +160,6 @@
 					        	
 					    </div>
 					    <p class="price">Price: $<%=book.getPrice()%></p>
-					    <p class="price">Price: $<%=book.getGenre()%></p>
 					    <button class="btn">Add to Cart</button>
 					</div>
 				<% } %>
@@ -202,6 +247,7 @@
 	        </div>
 	    </div>
 	</div>
+
 	<script src="./js/dropdown.js"></script>
     <script src="./js/functions.js"></script>
     <script src="./js/script.js"></script>

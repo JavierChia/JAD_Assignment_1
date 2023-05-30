@@ -1,4 +1,5 @@
 const wrapper = document.querySelector('.wrapper');
+const wrapperContainer = document.querySelector('.wrapper-container')
 const descContainer = document.querySelector('.description-container');
 const loginLink = document.querySelector('.login-link');
 const registerLink = document.querySelector('.register-link');
@@ -15,11 +16,13 @@ loginLink.addEventListener('click', () => {
 
 openLogin.addEventListener('click', () => {
     wrapper.classList.add('active-popup');
+    wrapperContainer.classList.add("active-popup");
     descContainer.classList.add('blur');
 })
 
 closeLogin.addEventListener('click', () => {
     wrapper.classList.remove('active-popup');
+    wrapperContainer.classList.remove("active-popup")
     descContainer.classList.remove('blur');
 })
 

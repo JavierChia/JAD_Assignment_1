@@ -9,11 +9,11 @@ public class Book {
 	private String publisher;
 	private String date;
 	private String isbn;
-	private String genre;
+	private String[] genre;
 	private int rating;
 	
 	public Book(int id, String title, String author, double price, int quantity, String publisher, String date,
-			String isbn, String genre, int rating) {
+			String isbn, String[] genre, int rating) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -95,11 +95,11 @@ public class Book {
 		this.isbn = isbn;
 	}
 
-	public String getGenre() {
+	public String[] getGenre() {
 		return genre;
 	}
 
-	public void setGenre(String genre) {
+	public void setGenre(String[] genre) {
 		this.genre = genre;
 	}
 }
