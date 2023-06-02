@@ -582,49 +582,6 @@ body {
 .navigation .logoutForm {
     display: inline;
 }
-/*DESCRIPTION STYLE*/
-.description-container {
-	overflow: scroll;
-    height: 100vh;
-}
-.main-container {
-    font-size: 1.5em;
-    font-weight: 600;
-    width: 100%;
-    margin-top: 100px;
-    text-align: center;
-    z-index:1;
-}
-
-.description-container.blur {
-	filter: blur(5px);
-}
-
-/*Start Browsing Button Style*/
-.main-container a {
-    text-decoration: none;
-}
-.startBrowsing {
-    background: transparent;
-    border: 2px solid #333;
-    outline: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1em;
-    padding: 10px;
-    color: #333;
-    font-weight: 500;
-    margin-top: 20px;
-    margin-left: 40px;
-    transition: 0.3s;
-}
-
-.startBrowsing:hover{
-    color: #fff;
-    background: #555;
-    transform: scale(1.05);
-}
-
 
 /*wrapper*/
 .wrapper-container {
@@ -853,224 +810,100 @@ input:-webkit-autofill:active{
     width: 100%;
 }
 
-/*Category dropdown styles*/
-.dropdown {
-    position: relative;
-    padding: 0;
+.description-container {
+	overflow: scroll;
+    height: 100vh;
 }
-
-.dropdown * {
-    box-sizing: border-box;
-}
-
-.genre-container {
-    width: 20%;
-}
-
-
-.select {
-    background: #333;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 2px #5a5a5a solid;
-    border-radius: 60px 10px 10px 60px;
-    padding: 20px 30px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.select-clicked {
-    border: 2px #5a5a5a solid;
-    box-shadow: 0 0 0.8em #333;
-}
-
-.select:hover {
-    background: #5a5a5a;
-}
-
-.caret {
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid #fff;
-    transition: 0.3s;
-}
-
-.caret-rotate {
-    transform: rotate(180deg);
-}
-
-.menu {
-    list-style: none;
+.main-container {
     width: 100%;
-    padding: 0.2em 0.5em;
-    background: #333;
-    border: 1px #272727 solid;
-    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
-    border-radius: 0.5em;
-    color: #fff;
-    position: absolute;
-    top: 3em;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    display: none;
-    transition: 0.2s;
-    z-index: 1;
-    height: 300px;
-    overflow-y: auto;
+    margin-top: 110px;
+    z-index:1;
 }
 
-.menu li {
-    text-align: left;
-    padding: 0.7em 0.5em;
-    margin: 0.3em 0;
-    border-radius: 0.5em;
-    cursor: pointer;
-    font-size: 1rem;
+.description-container.blur {
+	filter: blur(5px);
 }
 
-.menu li:hover {
-    background: #5a5a5a;
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.active2 {
-    background: #272727;
+.cart-table th:nth-child(7),
+.cart-table td:nth-child(7) {
+    width: 15%;
+    text-align: center;
 }
 
-.menu-open {
-    display: block;
-    opacity: 1;
-}
-
-/*Search Button*/
-.submit-button {
-    padding: 20px 30px;
-    font-size: 1rem;
-    width:100%;
-    font-weight: 500;
-    background: #333;
-    border: none;
-    outline: none;
-    border: 2px #5a5a5a solid;
-    border-radius: 10px 60px 60px 10px;
+.quantity-controls {
+    display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    transition: 0.3s;
 }
 
-.submit-button:hover {
-    transition: 0.3s;
-    background-color: #5a5a5a;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-.submit-container {
-	width:15%;
+.quantity-btn {
+    font-size: 1.2rem;
+    padding: 0.25rem 0.5rem;
+    margin: 0 0.2rem;
+    border: none;
+    background-color: #f1f1f1;
+    cursor: pointer;
 }
 
-.card-container {
-	width: 100%;
-	display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-	padding: 30px 50px;
-	margin-top: 10px;
-	gap: 40px;
-}
-.card {
-	width:280px;
-	padding: 20px;
-	margin-bottom: 20px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	text-align: center;
-	background-color: #f7f7f7;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	transition: box-shadow 0.3s ease-sin-out;
+.quantity-input {
+    width: 40px;
+    padding: 0.25rem 0.5rem;
 }
 
-.card:hover {
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.cart-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+    padding: 10px;
 }
 
-.card img {
-    width: 150px;
-    height: 200px;
-    object-fit: cover;
-    margin-bottom: 15px;
+.cart-table td {
+    padding: 10px;
 }
 
-.card h3 {
-    white-space: nowrap; 
-	overflow: hidden;
-	text-overflow: ellipsis; 
-    font-size: 18px;
-    margin-bottom: 10px;
+.cart-table tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
-.card .author {
-    font-size: 14px;
-    color: #888;
-    margin-bottom: 8px;
+.cart-table tr:hover {
+    background-color: #ebebeb;
 }
 
-.genres {
-  margin-top: 10px;
-  font-size: 1rem;
-  margin-bottom: 5px;
+.book-cover {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 50px;
+   	padding-bottom: 50px;
+	object-fit: cover;
+	border: 1px solid black;
 }
 
-.genre {
-  display: inline-block;
+.remove-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: red;
+    font-size: 25px;
 }
 
-.dot {
-  display: inline-block;
-  color: black;
+.remove-button:hover {
+    color: darkred;
 }
-
-.card .rating {
-    margin-bottom: 12px;
-}
-
-.card .rating i {
+.rating i {
     color: #ffc107;
 }
-
-.card button {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.card button:hover {
-    background-color: #45a049;
-}
-   
-.price {
-	font-weight: bold;
-	color: #333; 
-	font-size: 16px;
-	margin-bottom: 16px;
-}
-
-.hidden-checkbox {
-    display: none;
-}
-
-.added {
-    background-color: #ccc;
-    color: #888;
-    cursor: not-allowed;
+td.image-cell {
+  width: 120px;
+  padding: 10px;
+  
 }

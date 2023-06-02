@@ -56,7 +56,7 @@
 
         <nav class="navigation">
             <a href="/ST0510_JAD_Assignment_1/GetBooksServlet" class="navLink">Books</a>
-            <a href="CheckoutServlet"id="cart" style="cursor: pointer;" class="navLink">Shopping Cart</a>
+            <a href="/ST0510_JAD_Assignment_1/GetCartServlet"id="cart" style="cursor: pointer;" class="navLink">Shopping Cart</a>
             <a id="admin" class="navLink">Admin</a>
             <% if (message != null && message.equals("validLogin")) { %>
             	<form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class=logoutForm>
