@@ -20,6 +20,7 @@ quantity.add(1);
 session.setAttribute("cart", cart);
 session.setAttribute("quantity", quantity);
 session.setAttribute("customer", 3);
-response.sendRedirect(request.getContextPath() + "/CheckoutServlet");%>
+response.sendRedirect(request.getContextPath() + "/CheckoutServlet");
+%>
 </body>
 </html>

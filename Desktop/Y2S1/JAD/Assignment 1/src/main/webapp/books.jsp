@@ -56,7 +56,7 @@
 
         <nav class="navigation">
             <a href="/ST0510_JAD_Assignment_1/GetBooksServlet" class="navLink">Books</a>
-            <a id="cart" style="cursor: pointer;" class="navLink">Shopping Cart</a>
+            <a href="CheckoutServlet"id="cart" style="cursor: pointer;" class="navLink">Shopping Cart</a>
             <a id="admin" class="navLink">Admin</a>
             <% if (message != null && message.equals("validLogin")) { %>
             	<form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class=logoutForm>
@@ -160,7 +160,10 @@
 					        	
 					    </div>
 					    <p class="price">Price: $<%=book.getPrice()%></p>
-					    <button class="btn" onclick="">Add to Cart</button>
+					    <form action="add2cart.jsp">
+					    	<input type="hidden" name="bookID" value="<%=book.getId()%>">
+					    	<button type="submit" class="btn" onclick="">Add to Cart</button>
+					    </form>
 					</div>
 				<% } %>
 	   	 		</div>
