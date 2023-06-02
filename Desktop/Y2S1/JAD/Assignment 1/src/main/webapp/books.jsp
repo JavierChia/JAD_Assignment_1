@@ -160,7 +160,7 @@
 					        	
 					    </div>
 					    <p class="price">Price: $<%=book.getPrice()%></p>
-					    <button class="btn">Add to Cart</button>
+					    <button class="btn" onclick="">Add to Cart</button>
 					</div>
 				<% } %>
 	   	 		</div>
