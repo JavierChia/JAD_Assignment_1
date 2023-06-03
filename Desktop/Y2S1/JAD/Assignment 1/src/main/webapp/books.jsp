@@ -72,6 +72,7 @@
 	    <div class="main-container">
 	        <div class="sub-container-1">
 	            <div class="title">Search for a DVD!</div>
+	            <%= session.getAttribute("genres") %>
 	
 	            <div class="bottom-row">
 		            <form action="/ST0510_JAD_Assignment_1/GetBooksServlet">
@@ -140,13 +141,22 @@
 					    <h3><%=book.getTitle()%></h3>
 					    <p class="author"><%=book.getAuthor()%></p>
 					    <div class="genres">
-						    <% String[] genres = book.getGenre(); %>
-						    <% for (int k = 0; k < genres.length; k++) { %>
-						        <span class="genre"><%= genres[k] %></span>
-						        <% if (k < genres.length - 1) { %>
-						            <span class="dot">&bull;</span>
-						        <% } %>
-						    <% } %>
+						    <%
+						    String[] genres = book.getGenre();
+						    for (int k = 0; k < genres.length; k++) {
+						    	int genre = Integer.parseInt(genres[k]);
+						    	for (int x = 0; x < allGenres.size(); x++) {
+						    		BookGenre genreCheck = allGenres.get(x);
+						    		if (genre == genreCheck.getGenreId()) {
+						    			out.print("<span class='genre'>" + genreCheck.getGenreName() + "</span>");
+						    			break;
+						    		}
+						    	}
+						        if (k < genres.length - 1) {
+						            out.print("<span class='dot'>&bull;</span>");
+						        }
+						    }
+							%>
 						</div>
 
 
