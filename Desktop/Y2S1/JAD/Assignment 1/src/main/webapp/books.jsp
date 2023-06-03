@@ -72,7 +72,6 @@
 	    <div class="main-container">
 	        <div class="sub-container-1">
 	            <div class="title">Search for a DVD!</div>
-	            <%= session.getAttribute("genres") %>
 	
 	            <div class="bottom-row">
 		            <form action="/ST0510_JAD_Assignment_1/GetBooksServlet">
@@ -145,6 +144,7 @@
 						    String[] genres = book.getGenre();
 						    for (int k = 0; k < genres.length; k++) {
 						    	int genre = Integer.parseInt(genres[k]);
+						    	//Convert id to name
 						    	for (int x = 0; x < allGenres.size(); x++) {
 						    		BookGenre genreCheck = allGenres.get(x);
 						    		if (genre == genreCheck.getGenreId()) {
