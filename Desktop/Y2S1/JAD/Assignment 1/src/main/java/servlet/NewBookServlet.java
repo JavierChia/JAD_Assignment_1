@@ -37,7 +37,6 @@ public class NewBookServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 				PrintWriter out = response.getWriter();
-				HttpSession session = request.getSession();
 
 				try {
 					
@@ -60,7 +59,7 @@ public class NewBookServlet extends HttpServlet {
 //			 		int quantity = Integer.parseInt(request.getParameter("quantity"));
 			 		String publisher = request.getParameter("publisher");
 			 		String pdate = request.getParameter("pdate");
-			 		String isbn = request.getParameter("ISBN");
+			 		String isbn = request.getParameter("isbn");
 			 		String[] genres = request.getParameterValues("genre");
 			 		int rating = Integer.parseInt(request.getParameter("rating"));
 			 		String desc = request.getParameter("desc");
@@ -86,9 +85,9 @@ public class NewBookServlet extends HttpServlet {
 			 		statement.setString(9,desc);
 			 		statement.executeUpdate();
 			 		ResultSet rs = statement.getGeneratedKeys();
-			 		int order_id = 0;
+			 		int book_id = 0;
 			 		if (rs.next()) {
-			 		    order_id = rs.getInt(1);
+			 		    book_id = rs.getInt(1);
 			 		}
 			 		
 			 		// Step 6: Process Result
