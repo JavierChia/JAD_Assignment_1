@@ -97,6 +97,7 @@ public class NewBookServlet extends HttpServlet {
 			 	} catch (Exception e) {
 			 		out.println("Error: " + e);
 			 	}
+				response.sendRedirect(request.getHeader("referer").split("\\?")[0] + "?statusCode=validCreation");
 	}
 
 	/**

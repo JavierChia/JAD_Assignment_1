@@ -99,34 +99,12 @@ public class GetBooksServlet extends HttpServlet {
 	 			double price = rs.getDouble("price");
 	 			int quantity = rs.getInt("quantity");
 	 			String publisher = rs.getString("publisher");
+	 			String description = rs.getString("description");
 	 			String date = rs.getString("publication_date");
 	 			String isbn = rs.getString("isbn");
 	 			int rating = rs.getInt("rating");
 	 			String[] genre = rs.getString("genre").substring(1).split("-");
-// to Javier: delete this if u dont need :D
-//	 			String genresString = rs.getString("genre");
-//	 		    String[] genreIDs = genresString.split(",");
-//	 		    String[] genreNames = new String[genreIDs.length];
-//		 		   for (int i = 0; i < genreIDs.length; i++) {
-//		 		        try {
-//		 		            String sql = "SELECT genre_name FROM book_genre WHERE genre_id = ?";
-//		 		            PreparedStatement statement1 = conn.prepareStatement(sql);
-//		 		            statement1.setString(1, genreIDs[i]);
-//		 		            ResultSet resultSet = statement1.executeQuery();
-//	
-//		 		            if (resultSet.next()) {
-//		 		                genreNames[i] = resultSet.getString("genre_name");
-//		 		            }
-//	
-//		 		            resultSet.close();
-//		 		            statement1.close();
-//		 		        } catch (Exception e) {
-//		 		            e.printStackTrace();
-//		 		            // Handle the exception appropriately
-//		 		        }
-//		 		    }
-	 		    
-	 			books.add(new Book(id,title,author,price,quantity,publisher,date,isbn, genre, rating));
+	 			books.add(new Book(id,title,author,price,quantity,publisher,date,description,isbn, genre, rating));
 	 		}
 	 		
 	 		ArrayList<BookGenre> genres = new ArrayList<BookGenre>();
@@ -141,7 +119,7 @@ public class GetBooksServlet extends HttpServlet {
 	 		session.setAttribute("books", books);
 	 		session.setAttribute("genres", genres);
 	 		// Step 7: Close connection
-	 		response.sendRedirect("/ST0510_JAD_Assignment_1/books.jsp?genre=");
+	 		response.sendRedirect("/ST0510_JAD_Assignment_1/books.jsp?");
 	 		conn.close();
 	 	} catch (Exception e) {
 	 		out.println("Error: " + e);

@@ -1,9 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-
-<meta charset="ISO-8859-1">
-<title>Display all books</title>
-    <link rel="stylesheet" href="./css/books.css">
+    <meta charset="ISO-8859-1">
+	<title>Display all books</title>
+    <link rel="stylesheet" href="./css/addBook.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
@@ -18,18 +19,18 @@
             	out.print("logoutAlert();");
             } else if (message !=null && message.equals("validRegistration")){
             	out.print("registerAlert();");
+            } else if (message !=null && message.equals("validCreation")){
+            	out.print("addedBook();");
             }
        		 %>
-        })
+        })   
     </script>
 </head>
-
 <body>
-<%@page import="java.util.*"%>
-<%@page import="books.Book"%>
-<%@page import="books.BookGenre" %>
-
-</body>
+	<%@page import="java.util.*"%>
+	<%@page import="books.Book"%>
+	<%@page import="books.BookGenre" %>
+	
 	<div class="alerts">
 		<div class='loginAlert hide'>
 	        <span class="fa-solid fa-circle-exclamation"></span>
@@ -50,6 +51,11 @@
 	        <span class="fa-solid fa-circle-check"></span>
 	        <span class="msg">Successfully registered!</span>
 	    </div>
+	    
+	    <div class='addedBook hide'>
+	        <span class="fa-solid fa-circle-check"></span>
+	        <span class="msg">Successfully Added a New Book!</span>
+	    </div>
 	</div>
     
     <div class="navbar">
@@ -61,7 +67,7 @@
             <div class="dropdown2">
 			    <a id="admin" class="navLink">Admin</a>
 			    <ul class="dropdown2-menu">
-			        <li><a href="addBook.jsp">Add Book</a></li>
+			        <li><a href="#">Add Book</a></li>
 			        <li><a href="#">Update Book</a></li>
 			        <li><a href="#">Delete Book</a></li>
 			        <li><a href="#">Add Member</a></li>
@@ -80,15 +86,38 @@
     		<% } %>
         </nav>
     </div>
-    
-    <div class="description-container">
-	    <div class="main-container">
-	        <div class="sub-container-1">
-	            <div class="title">Search for a DVD!</div>
-	
-	            <div class="bottom-row">
-		            <form action="/ST0510_JAD_Assignment_1/GetBooksServlet">
-					    <div class="genre-container" style="display: inline-block;">
+<div class="description-container">
+	<div class="main-container">
+    <div class="form-container">
+        <h2>Add Book</h2>
+        <form action="/ST0510_JAD_Assignment_1/NewBookServlet">
+            <div class="form-group">
+                <label>Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+			    <label>ISBN:</label>
+			    <input type="text" id="isbn" name="isbn" required>
+			</div>
+            <div class="form-group">
+                <label>Author:</label>
+                <input type="text" id="author" name="author" required>
+            </div>
+            <div class="form-group">
+                <label>Price:</label>
+                <input type="number" id="price" name="price" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label>Publisher:</label>
+                <input type="text" id="publisher" name="publisher" required>
+            </div>
+            <div class="form-group">
+                <label>Publication Date:</label>
+                <input type="date" id="pdate" name="pdate" required>
+            </div>
+            <div class="form-group">
+                <label>Genre:</label>
+                <div class="genre-container" style="display: inline-block;">
 					        <% 
 					        String[] selectedGenres = request.getParameterValues("genre");
 					        if (selectedGenres == null) {
@@ -118,81 +147,32 @@
 					            </ul>
 					        </div>
 					    </div>
-					
-					    <div class="title-bar-container" style="display: inline-block;">
-					        <input type="text" class="title-bar" placeholder="Enter a title!" id="title" name="title">
-					    </div>
-					    
-					    <div class="submit-container" style="display: inline-block;">
-					        <button type="submit" class="submit-button" id="search">Search</button>
-					    </div>
-					</form>
-					
-					<script>
-					    // Add click event listener to the list items
-					    var listItems = document.querySelectorAll("#genre-names li");
-					    listItems.forEach(function(item) {
-					        item.addEventListener("click", function() {
-					            var checkbox = this.querySelector("input[type='checkbox']");
-					            checkbox.checked = !checkbox.checked;
-					        });
-					    });
-					</script>
-
-	            </div>
-			</div>
-	        <div class="sub-container-2">
-	            <div class ="card-container">
-		    	<%	
-				    ArrayList<Book> books = (ArrayList<Book>) session.getAttribute("books");
-				    for (int i = 0; i < books.size(); i++) {
-				        Book book = books.get(i);
-				%>
-					<div class="card">
-					    <img src="placeholder-image.jpg" alt="Book Cover">
-					    <h3><%=book.getTitle()%></h3>
-					    <p class="author"><%=book.getAuthor()%></p>
-					    <div class="genres">
-						    <%
-						    String[] genres = book.getGenre();
-						    for (int k = 0; k < genres.length; k++) {
-						    	int genre = Integer.parseInt(genres[k]);
-						    	//Convert id to name
-						    	for (int x = 0; x < allGenres.size(); x++) {
-						    		BookGenre genreCheck = allGenres.get(x);
-						    		if (genre == genreCheck.getGenreId()) {
-						    			out.print("<span class='genre'>" + genreCheck.getGenreName() + "</span>");
-						    			break;
-						    		}
-						    	}
-						        if (k < genres.length - 1) {
-						            out.print("<span class='dot'> &bull; </span>");
-						        }
-						    }
-							%>
-						</div>
-
-
-					    <div class="rating">
-					        <% for (int j = 0; j < book.getRating(); j++) { %>
-					            <i class="fas fa-star"></i>
-					        <% }
-					           for (int j = book.getRating(); j < 5; j++) { %>
-					            <i class="far fa-star"></i>
-					        <% } %>
-					        	
-					    </div>
-					    <p class="price">Price: $<%=book.getPrice()%></p>
-					    <form action="add2cart.jsp">
-					    	<input type="hidden" name="bookID" value="<%=book.getId()%>">
-					    	<button type="submit" class="btn" onclick="">Add to Cart</button>
-					    </form>
-					</div>
-				<% } %>
-	   	 		</div>
-	    	</div>
-		</div>
-	</div>
+            </div>
+            <div class="form-group">
+                <label>Rating:</label>
+                <input type="number" id="rating" name="rating" min="0" max="5" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label>Description:</label>
+                <textarea id="desc" name="desc" required></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Add Book</button>
+            </div>
+        </form>
+        <script>
+		    // Add click event listener to the list items
+		    var listItems = document.querySelectorAll("#genre-names li");
+		    listItems.forEach(function(item) {
+		        item.addEventListener("click", function() {
+		            var checkbox = this.querySelector("input[type='checkbox']");
+		            checkbox.checked = !checkbox.checked;
+		        });
+		    });
+		</script>
+    </div>
+    </div>
+    </div>
     <!--LOGIN & REGISTER-->
     <div class="wrapper-container">
 	    <div class="wrapper">
@@ -277,7 +257,5 @@
 	<script src="./js/dropdown.js"></script>
     <script src="./js/functions.js"></script>
     <script src="./js/script.js"></script>
-</body>
-
 </body>
 </html>

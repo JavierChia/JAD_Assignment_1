@@ -31,12 +31,11 @@ public class LogoutUserServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		javax.servlet.http.HttpSession session = request.getSession(false);
         if (session != null) {
-            session.invalidate();
+        	session.removeAttribute("sessUserID");
+            session.removeAttribute("sessUserRole");
+            session.removeAttribute("sessUserName");
         }
-
-        // Redirect the user to the login page
-        response.sendRedirect(request.getContextPath() + "/index.jsp?statusCode=loggedOut");
-
+        response.sendRedirect(request.getHeader("referer").split("\\?")[0] + "?statusCode=loggedOut");
 	}
 
 	/**

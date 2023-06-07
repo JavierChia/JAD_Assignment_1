@@ -69,6 +69,7 @@ public class GetCartServlet extends HttpServlet {
 		 			String publisher = rs.getString("publisher");
 		 			String date = rs.getString("publication_date");
 		 			String isbn = rs.getString("isbn");
+		 			String description = rs.getString("description");
 		 			String genresString = rs.getString("genre");
 		 		    String[] genreIDs = genresString.split(",");
 		 		   String[] genreNames = new String[genreIDs.length];
@@ -93,7 +94,7 @@ public class GetCartServlet extends HttpServlet {
 		 		    int rating = rs.getInt("rating");
 
 	                // Create a Book object
-		 		   	booksInCart.add(new Book(id,title,author,price,quantity,publisher,date,isbn, genreNames, rating));
+		 		   	booksInCart.add(new Book(id,title,author,price,quantity,publisher,date,description,isbn, genreNames, rating));
 	            }
 	            
 	            // Close the ResultSet and PreparedStatement
