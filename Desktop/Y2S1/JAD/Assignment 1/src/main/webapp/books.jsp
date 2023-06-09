@@ -1,8 +1,7 @@
 <html>
 <head>
-
-<meta charset="ISO-8859-1">
-<title>Display all books</title>
+	<meta charset="ISO-8859-1">
+	<title>Display all books</title>
     <link rel="stylesheet" href="./css/books.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -25,11 +24,9 @@
 </head>
 
 <body>
-<%@page import="java.util.*"%>
-<%@page import="books.Book"%>
-<%@page import="books.BookGenre" %>
-
-</body>
+	<%@page import="java.util.*"%>
+	<%@page import="books.Book"%>
+	<%@page import="books.BookGenre" %>
 	<div class="alerts">
 		<div class='loginAlert hide'>
 	        <span class="fa-solid fa-circle-exclamation"></span>
@@ -277,7 +274,5 @@
 	<script src="./js/dropdown.js"></script>
     <script src="./js/functions.js"></script>
     <script src="./js/script.js"></script>
-</body>
-
 </body>
 </html>

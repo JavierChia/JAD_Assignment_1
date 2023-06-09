@@ -514,6 +514,7 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: #fff;
+    z-index:99;
 }
 
 .logo a {
@@ -950,7 +951,19 @@ input:-webkit-autofill:active{
 .menu-open {
     display: block;
     opacity: 1;
+    overflow: auto; 
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
 }
+
+.menu-open::-webkit-scrollbar {
+  width: 6px;
+}
+
+.menu-open::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
 
 /*Search Button*/
 .submit-button {

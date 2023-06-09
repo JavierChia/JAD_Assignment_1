@@ -63,7 +63,11 @@ public class VerifyUserServlet extends HttpServlet {
 					session.setAttribute("sessUserID", id);
 					session.setAttribute("sessUserRole", role);
 					session.setAttribute("sessUserName", first_name + ' ' + last_name);
-		            response.sendRedirect(request.getHeader("referer").split("\\?")[0] + "?statusCode=validLogin");
+					if (role.equals("Admin")) {
+						response.sendRedirect("/ST0510_JAD_Assignment_1/GetCustomersServlet");
+					} else {
+						response.sendRedirect(request.getHeader("referer").split("\\?")[0] + "?statusCode=validLogin");
+					}
 		        } else {
 		            response.sendRedirect(request.getHeader("referer").split("\\?")[0] + "?statusCode=invalidLogin");
 		        }

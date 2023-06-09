@@ -1009,6 +1009,17 @@ input:-webkit-autofill:active{
 .menu-open {
     display: block;
     opacity: 1;
+    overflow: auto; 
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+
+.menu-open::-webkit-scrollbar {
+  width: 6px;
+}
+
+.menu-open::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
 
 /*Admin Dropdown Styles*/

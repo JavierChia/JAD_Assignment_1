@@ -1,0 +1,378 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.blocker {
+	position: fixed;
+	display: flex;
+	background-color: #fff;
+	width: 100%;
+	height: 20px;
+	z-index: 1;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 15px;
+    color: #fff;
+    position: fixed;
+    font-size: 28px;
+    top: 0;
+    left: 210px;
+    border-radius: 10px;
+    margin: 10px;
+    width: calc(100% - 230px);
+    z-index: 1;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 600;
+    padding: 25px 10px;
+    text-align: center;
+}
+
+.side-navigation {
+    margin: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f3f3f3;
+    height: 100vh;
+    width: 200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border: 1px solid #ccc;
+    z-index: 1;
+}
+
+.content {
+    margin-top: 20px;
+}
+.content-wrapper {
+   margin-left: 220px;
+    margin-right: 10px;
+    height: 100vh;
+    overflow-y: auto;
+    padding-top: 75px;
+}
+
+.form-wrapper {
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.table-wrapper {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.search-bar {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-bar input[type="text"] {
+    padding: 10px;
+    width: 60%;
+    border: none;
+    border-radius: 4px;
+    font-size: 20px;
+    font-family: "Poppins", sans-serif;
+}
+
+.logout-button {
+    padding: 10px 15px;
+    background-color: #c0392b;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.nav-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nav-item:hover {
+    background-color: #ddd;
+}
+
+.content h2 {
+    margin-top: 0;
+}
+
+.form-container {
+    width: 80%;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.form-group textarea {
+    height: 100px;
+}
+
+.form-group select {
+    height: 38px;
+}
+
+.form-group button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#pdate {
+    font-size: 16px;
+    color: grey;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+.form-group button:hover {
+    background-color: #45a049;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 15px 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+
+.table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.action-buttons {
+    display: flex;
+}
+
+.action-buttons button {
+    margin-right: 5px;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.action-buttons button.edit {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.action-buttons button.delete {
+    background-color: #c0392b;
+    color: #fff;
+}
+
+.action-buttons button:hover {
+    opacity: 0.8;
+}
+
+.action-buttons button.edit:hover {
+    background-color: #0056b3;
+}
+
+.action-buttons button.delete:hover {
+    background-color: #a93226;
+}
+
+/*Category dropdown styles*/
+.dropdown {
+    position: relative;
+    padding: 0;
+}
+
+.dropdown * {
+    box-sizing: border-box;
+}
+
+.genre-container {
+    width: 100%;
+}
+
+.selected {
+	width: 100%;
+}
+
+.select {
+    background: #333;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px #5a5a5a solid;
+    border-radius: 10px;
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.select-clicked {
+    border: 2px #5a5a5a solid;
+    box-shadow: 0 0 0.8em #333;
+}
+
+.select:hover {
+    background: #5a5a5a;
+}
+
+.caret {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #fff;
+    transition: 0.3s;
+}
+
+.caret-rotate {
+    transform: rotate(180deg);
+}
+
+.menu {
+    list-style: none;
+    width: 100%;
+    padding: 0em 0.3em;
+    background: #333;
+    border: 1px #272727 solid;
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
+    border-radius: 0.5em;
+    color: #fff;
+    position: absolute;
+    top: 3em;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    display: none;
+    transition: 0.2s;
+    z-index: 1;
+    height: 300px;
+    overflow-y: auto;
+}
+
+.menu li {
+    text-align: left;
+    padding: 0.7em 0.5em;
+    margin: 0.5em 0;
+    border-radius: 0.5em;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.menu li:hover {
+    background: #5a5a5a;
+}
+
+.active2 {
+    background: #fff;
+    color: #000;
+}
+
+.menu-open {
+    display: block;
+    opacity: 1;
+    overflow: auto; 
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+
+.menu-open::-webkit-scrollbar {
+  width: 6px;
+}
+
+.menu-open::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.hidden-checkbox {
+    display: none;
+}
+.nav-item.active {
+    background-color: #ddd;
+}
+
+.side-navigation a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.side-navigation a:hover {
+    text-decoration: none;
+}
