@@ -28,25 +28,26 @@
 <%@page import="java.util.*"%>
 <%@page import="books.Book"%>
 <%@page import="books.BookGenre" %>
-
-	<div class='loginAlert hide'>
-        <span class="fa-solid fa-circle-exclamation"></span>
-        <span class="msg">Incorrect email or password!</span>
-    </div>
-    
-    <div class='loggedIn hide'>
-        <span class="fa-solid fa-circle-check"></span>
-        <span class="msg">Successfully logged in!</span>
-    </div>
-    
-    <div class='loggedOut hide'>
-        <span class="fa-solid fa-arrow-right-from-bracket"></span>
-        <span class="msg">Successfully logged out!</span>
-    </div>
-    
-    <div class='registered hide'>
-        <span class="fa-solid fa-circle-check"></span>
-        <span class="msg">Successfully registered!</span>
+	<div class="alerts">
+		<div class='loginAlert hide'>
+	        <span class="fa-solid fa-circle-exclamation"></span>
+	        <span class="msg">Incorrect email or password!</span>
+	    </div>
+	    
+	    <div class='loggedIn hide'>
+	        <span class="fa-solid fa-circle-check"></span>
+	        <span class="msg">Successfully logged in!</span>
+	    </div>
+	    
+	    <div class='loggedOut hide'>
+	        <span class="fa-solid fa-arrow-right-from-bracket"></span>
+	        <span class="msg">Successfully logged out!</span>
+	    </div>
+	    
+	    <div class='registered hide'>
+	        <span class="fa-solid fa-circle-check"></span>
+	        <span class="msg">Successfully registered!</span>
+	    </div>
     </div>
     
     <div class="navbar">
@@ -55,14 +56,28 @@
         <nav class="navigation">
             <a href="/ST0510_JAD_Assignment_1/GetBooksServlet" class="navLink">Books</a>
             <a href="/ST0510_JAD_Assignment_1/GetCartServlet"id="cart" style="cursor: pointer;" class="navLink">Shopping Cart</a>
-            <a id="admin" class="navLink">Admin</a>
-            <% if (message != null && message.equals("validLogin")) { %>
-            	<form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class=logoutForm>
-            		<button type="submit" class="btnLogin" id="btnLogin">Logout</button>
-            	</form>
-    		<% } else { %>
-       		 	<button class="btnLogin" id="btnLogin">Login</button>
-    		<% } %>
+            <% 
+			    Object uIDObj = session.getAttribute("sessUserID");
+			    if (uIDObj != null) {
+			        if (uIDObj instanceof String) {
+			            String uID = (String) uIDObj;
+			%>
+			            <form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class="logoutForm">
+			                <button type="submit" class="btnLogin" id="btnLogin">Logout</button>
+			            </form>
+			<%
+			        } else if (uIDObj instanceof Integer) {
+			            Integer uID = (Integer) uIDObj;
+			%>
+			            <form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class="logoutForm">
+			                <button type="submit" class="btnLogin" id="btnLogin">Logout</button>
+			            </form>
+			<%
+			        }
+			    } else {
+			%>
+			    <button class="btnLogin" id="btnLogin">Login</button>
+			<% } %>
         </nav>
     </div>
 	<div class="description-container">
@@ -77,23 +92,37 @@
 	                <th>Price</th>
 	                <th>Action</th>
 	            </tr>
-	            <%    
-	            ArrayList<Book> booksInCart = (ArrayList<Book>) session.getAttribute("booksInCart");
-	            if (booksInCart != null && !booksInCart.isEmpty()) {
-	                for (Book book : booksInCart) {
-	            %>
+	            <%
+				Object booksInCartObj = session.getAttribute("booksInCart");
+				if (booksInCartObj != null && booksInCartObj instanceof ArrayList) {
+				    ArrayList<Book> booksInCart = (ArrayList<Book>) session.getAttribute("booksInCart");
+				    if (!booksInCart.isEmpty()) {
+				        for (Book book : booksInCart) {
+				%>
+
 	                <tr>
 	                    <td class="image-cell"><img src="placeholder-image.jpg" alt="Book Cover" class="book-cover"></td>
 	                    <td><%= book.getTitle() %></td>
 	                    <td><%= book.getAuthor() %></td>
 	                    <td>
-	                        <% String[] genres = book.getGenre(); %>
-	                        <% for (int k = 0; k < genres.length; k++) { %>
-	                            <span class="genre"><%= genres[k] %></span>
-	                            <% if (k < genres.length - 1) { %>
-	                                <span class="dot">&bull;</span>
-	                            <% } %>
-	                        <% } %>
+	                        <%
+	                        ArrayList<BookGenre> allGenres = (ArrayList<BookGenre>) session.getAttribute("genres");
+						    String[] genres = book.getGenre();
+						    for (int k = 0; k < genres.length; k++) {
+						    	int genre = Integer.parseInt(genres[k]);
+						    	//Convert id to name
+						    	for (int x = 0; x < allGenres.size(); x++) {
+						    		BookGenre genreCheck = allGenres.get(x);
+						    		if (genre == genreCheck.getGenreId()) {
+						    			out.print("<span class='genre'>" + genreCheck.getGenreName() + "</span>");
+						    			break;
+						    		}
+						    	}
+						        if (k < genres.length - 1) {
+						            out.print("<span class='dot'> &bull; </span>");
+						        }
+						    }
+							%>
 	                    </td>
 	                    <td>
 	                        <div class="rating-stars">
@@ -115,12 +144,17 @@
 	                        </div>
 	                    </td>
 	                </tr>
-	            <%    }
-	            } else { %>
-	                <tr>
-	                    <td colspan="7">No books in the cart.</td>
-	                </tr>
-	            <% } %>
+	            <%
+			            }
+			        } 
+			    } else {
+			    %>
+			        <tr>
+			            <td class="empty-cart-message" colspan="7">No books in the cart.</td>
+			        </tr>
+			    <% 
+			    }
+			    %>
 	        </table>
 	    </div>
 	</div>

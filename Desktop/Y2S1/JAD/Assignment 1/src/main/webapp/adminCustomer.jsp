@@ -17,7 +17,10 @@
     <div class="header">
         <div class="search-bar">
             <input type="text" placeholder="Search">
-            <button class="logout-button">Logout</button>
+            <form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class=logoutForm>
+            		<button type="submit" class="logout-button">Logout</button>
+            </form>
+            
         </div>
     </div>
 

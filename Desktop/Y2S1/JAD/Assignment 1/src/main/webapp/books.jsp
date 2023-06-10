@@ -49,32 +49,35 @@
 	    </div>
 	</div>
     
-    <div class="navbar">
+   <div class="navbar">
         <h2 class="logo"><a href="index.jsp">SP BookStore</a></h2>
 
         <nav class="navigation">
             <a href="/ST0510_JAD_Assignment_1/GetBooksServlet" class="navLink">Books</a>
             <a href="/ST0510_JAD_Assignment_1/GetCartServlet"id="cart" style="cursor: pointer;" class="navLink">Shopping Cart</a>
-            <div class="dropdown2">
-			    <a id="admin" class="navLink">Admin</a>
-			    <ul class="dropdown2-menu">
-			        <li><a href="addBook.jsp">Add Book</a></li>
-			        <li><a href="#">Update Book</a></li>
-			        <li><a href="#">Delete Book</a></li>
-			        <li><a href="#">Add Member</a></li>
-			        <li><a href="#">Find Member</a></li>
-			        <li><a href="#">Update Member</a></li>
-			        <li><a href="#">Delete Member</a></li>
-			    </ul>
-			</div>
+            <% 
+			    Object uIDObj = session.getAttribute("sessUserID");
+			    if (uIDObj != null) {
+			        if (uIDObj instanceof String) {
+			            String uID = (String) uIDObj;
+			%>
+			            <form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class="logoutForm">
+			                <button type="submit" class="btnLogin" id="btnLogin">Logout</button>
+			            </form>
+			<%
+			        } else if (uIDObj instanceof Integer) {
+			            Integer uID = (Integer) uIDObj;
+			%>
+			            <form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class="logoutForm">
+			                <button type="submit" class="btnLogin" id="btnLogin">Logout</button>
+			            </form>
+			<%
+			        }
+			    } else {
+			%>
+			    <button class="btnLogin" id="btnLogin">Login</button>
+			<% } %>
 
-            <% if (message != null && message.equals("validLogin")) { %>
-            	<form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class=logoutForm>
-            		<button type="submit" class="btnLogin" id="btnLogin">Logout</button>
-            	</form>
-    		<% } else { %>
-       		 	<button class="btnLogin" id="btnLogin">Login</button>
-    		<% } %>
         </nav>
     </div>
     
