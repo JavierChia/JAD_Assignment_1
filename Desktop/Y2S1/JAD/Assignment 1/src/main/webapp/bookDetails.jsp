@@ -5,7 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Display all books</title>
-    <link rel="stylesheet" href="./css/books.css">
+    <link rel="stylesheet" href="./css/bookDetails.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
@@ -81,6 +81,76 @@
 			    <button class="btnLogin" id="btnLogin">Login</button>
 			<% } %>
         </nav>
+    </div>
+    <div class="main-container">
+	    <%@ page import="books.Book" %>
+	    <%@ page import="java.util.ArrayList" %>
+	    <%@ page import="javax.servlet.http.HttpSession" %>
+	    <%
+	        ArrayList<Book> books = (ArrayList<Book>) session.getAttribute("books");
+	        
+	        if (books != null && !books.isEmpty()) {
+	            for (Book book : books) {
+	                String id = String.valueOf(book.getId());
+	                String title = book.getTitle();
+	                String author = book.getAuthor();
+	                String price = String.format("%.2f", book.getPrice());
+	                String quantity = String.valueOf(book.getQuantity());
+	                String publisher = book.getPublisher();
+	                String publicationDate = book.getDate();
+	                String isbn = book.getIsbn();
+	                String rating = String.valueOf(book.getRating());
+	                String description = book.getDescription();
+	                String[] genres = book.getGenre();
+	    %>
+	    <div class="card">
+	        <div class="cover">
+	            <img src="placeholder.jpg" alt="Book Cover">
+	        </div>
+	        <div class="details">
+	            <h3><%= title %></h3>
+	            <p><strong>Author:</strong> <%= author %></p>
+	            <div class="rating">
+	                <strong>Rating:</strong>
+	                <%-- Display rating as stars (using Font Awesome) --%>
+	                <% for (int i = 0; i < Integer.parseInt(rating); i++) { %>
+	                    <span class="fa fa-star"></span>
+	                <% } %>
+	            </div>
+	            <p class="description"><strong>Description:</strong> <%= description %></p>
+	            <div class="genres">
+	                <strong>Genres:</strong>
+	                <%-- Display genres --%>
+	                <% 
+                    ArrayList<BookGenre> allGenres = (ArrayList<BookGenre>) session.getAttribute("genres");
+		                for (int k = 0; k < genres.length; k++) {
+		                    int genre = Integer.parseInt(genres[k]);
+		                    // Convert id to name
+		                    for (int x = 0; x < allGenres.size(); x++) {
+		                        BookGenre genreCheck = allGenres.get(x);
+		                        if (genre == genreCheck.getGenreId()) {
+		                            out.print("<span class='genre'>" + genreCheck.getGenreName() + "</span>");
+		                            break;
+		                        }
+		                    }
+		                }
+		                %>
+	            </div>
+	            <p class="publication-date"><strong>Publication Date:</strong> <%= publicationDate %></p>
+	            <p class="price"><strong>Price:</strong> $<%= price %></p>
+	            <div class="add-to-cart">
+	                <button>Add to Cart</button>
+	            </div>
+	        </div>
+	    </div>
+	    <% 
+	            }
+	        } else {
+	    %>
+	    <p>No book details available.</p>
+	    <% 
+	        }
+	    %>
     </div>
 </body>
 

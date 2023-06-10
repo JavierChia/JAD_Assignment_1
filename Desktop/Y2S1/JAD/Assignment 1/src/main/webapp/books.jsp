@@ -143,51 +143,50 @@
 			</div>
 	        <div class="sub-container-2">
 	            <div class ="card-container">
-		    	<%	
+		    	<%
 				    ArrayList<Book> books = (ArrayList<Book>) session.getAttribute("books");
 				    for (int i = 0; i < books.size(); i++) {
 				        Book book = books.get(i);
 				%>
-					<div class="card">
-					    <img src="placeholder-image.jpg" alt="Book Cover">
-					    <h3><%=book.getTitle()%></h3>
-					    <p class="author"><%=book.getAuthor()%></p>
-					    <div class="genres">
-						    <%
-						    String[] genres = book.getGenre();
-						    for (int k = 0; k < genres.length; k++) {
-						    	int genre = Integer.parseInt(genres[k]);
-						    	//Convert id to name
-						    	for (int x = 0; x < allGenres.size(); x++) {
-						    		BookGenre genreCheck = allGenres.get(x);
-						    		if (genre == genreCheck.getGenreId()) {
-						    			out.print("<span class='genre'>" + genreCheck.getGenreName() + "</span>");
-						    			break;
-						    		}
-						    	}
-						        if (k < genres.length - 1) {
-						            out.print("<span class='dot'> &bull; </span>");
-						        }
-						    }
-							%>
-						</div>
-
-
-					    <div class="rating">
-					        <% for (int j = 0; j < book.getRating(); j++) { %>
-					            <i class="fas fa-star"></i>
-					        <% }
-					           for (int j = book.getRating(); j < 5; j++) { %>
-					            <i class="far fa-star"></i>
-					        <% } %>
-					        	
-					    </div>
-					    <p class="price">Price: $<%=book.getPrice()%></p>
-					    <form action="add2cart.jsp">
-					    	<input type="hidden" name="bookID" value="<%=book.getId()%>">
-					    	<button type="submit" class="btn" onclick="">Add to Cart</button>
-					    </form>
-					</div>
+				<a href="/ST0510_JAD_Assignment_1/GetBookDetailsServlet?bookID=<%=book.getId()%>">
+				    <div class="card">
+				            <img src="placeholder-image.jpg" alt="Book Cover">
+				            <h3><%=book.getTitle()%></h3>
+				            <p class="author"><%=book.getAuthor()%></p>
+				            <div class="genres">
+				                <% 
+				                String[] genres = book.getGenre();
+				                for (int k = 0; k < genres.length; k++) {
+				                    int genre = Integer.parseInt(genres[k]);
+				                    // Convert id to name
+				                    for (int x = 0; x < allGenres.size(); x++) {
+				                        BookGenre genreCheck = allGenres.get(x);
+				                        if (genre == genreCheck.getGenreId()) {
+				                            out.print("<span class='genre'>" + genreCheck.getGenreName() + "</span>");
+				                            break;
+				                        }
+				                    }
+				                    if (k < genres.length - 1) {
+				                        out.print("<span class='dot'> &bull; </span>");
+				                    }
+				                }
+				                %>
+				            </div>
+				            <div class="rating">
+				                <% for (int j = 0; j < book.getRating(); j++) { %>
+				                    <i class="fas fa-star"></i>
+				                <% }
+				                   for (int j = book.getRating(); j < 5; j++) { %>
+				                    <i class="far fa-star"></i>
+				                <% } %>
+				            </div>
+				            <p class="price">Price: $<%=book.getPrice()%></p>
+				        <form action="add2cart.jsp">
+				            <input type="hidden" name="bookID" value="<%=book.getId()%>">
+				            <button type="submit" class="btn" onclick="">Add to Cart</button>
+				        </form>
+				    </div>
+				</a>
 				<% } %>
 	   	 		</div>
 	    	</div>

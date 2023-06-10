@@ -588,3 +588,107 @@ body {
 .navigation .logoutForm {
     display: inline;
 }
+
+.main-container {
+    font-size: 1.5em;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 190px;
+    text-align: center;
+    z-index:1;
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card .cover {
+    flex: 0 0 280px;
+    margin-right: 20px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.card .cover img {
+    width: 100%;
+    height: auto;
+}
+
+.card .details {
+    flex: 1;
+    text-align: start;
+}
+
+.card h3 {
+    margin-top: 0;
+    font-weight: 600;
+}
+
+.card p {
+    margin: 20px 0;
+    font-weight: 400;
+}
+
+.card .rating {
+    margin: 20px 0;
+}
+
+.card .rating .fa-star {
+    color: gold;
+}
+
+.card .description {
+    margin: 20px 0;
+    font-weight: 400;
+}
+
+.card .genres {
+    margin: 20px 0;
+    font-weight:400;
+}
+
+.card .genres span {
+    padding: 3px 10px;
+    background-color: #ddd;
+    border-radius: 4px;
+    margin-right: 5px;
+    font-size: 22px;
+}
+
+.card .publication-date {
+    font-size: 22px;
+   margin: 20px 0;
+}
+
+.card .price {
+    margin: 20px 0;
+    font-weight: 500;
+}
+
+.card .add-to-cart {
+   	margin-top: 20px;
+}
+
+.card .add-to-cart button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.card .add-to-cart button:hover {
+    background-color: #45a049;
+}
