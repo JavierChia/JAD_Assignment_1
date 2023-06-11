@@ -54,8 +54,7 @@ public class DeleteBookServlet extends HttpServlet {
 	 		String isbn = request.getParameter("isbn");
 	 		
 
-	 		String sqlStr = 
-	 				"DELETE FROM books WHERE ISBN = ?";
+	 		String sqlStr = "DELETE FROM books WHERE ISBN = ?";
 	 		PreparedStatement statement = conn.prepareStatement(sqlStr, Statement.RETURN_GENERATED_KEYS);
 	 		statement.setString(1,isbn);
 	 		statement.executeUpdate();

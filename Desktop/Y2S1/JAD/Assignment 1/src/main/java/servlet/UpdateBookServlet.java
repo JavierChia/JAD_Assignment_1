@@ -39,7 +39,6 @@ public class UpdateBookServlet extends HttpServlet {
 				PrintWriter out = response.getWriter();
 
 				try {
-					
 					//Step 1
 			 		Class.forName("com.mysql.jdbc.Driver");
 			 		
