@@ -13,6 +13,16 @@ function addedAlert() {
   }, 1000);
 }
 
+function addedBook() {
+  $(".addedBook").removeClass("hide");
+  $(".addedBook").addClass("show");
+  $(".addedBook").addClass("showAlert");
+  setTimeout(function () {
+    $(".addedBook").addClass("hide");
+    $(".addedBook").removeClass("show");
+  }, 1000);
+}
+
 function registerAlert() {
 	$(".registered").removeClass("hide");
   $(".registered").addClass("show");

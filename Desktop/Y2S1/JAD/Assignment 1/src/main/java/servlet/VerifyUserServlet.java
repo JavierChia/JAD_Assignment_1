@@ -42,6 +42,7 @@ public class VerifyUserServlet extends HttpServlet {
 		int id;
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String referer = request.getHeader("referer");
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -62,10 +63,14 @@ public class VerifyUserServlet extends HttpServlet {
 					session.setAttribute("sessUserID", id);
 					session.setAttribute("sessUserRole", role);
 					session.setAttribute("sessUserName", first_name + ' ' + last_name);
-					response.sendRedirect("/ST0510_JAD_Assignment_1/index.jsp?statusCode=validLogin");
-				} else {
-					response.sendRedirect("/ST0510_JAD_Assignment_1/index.jsp?statusCode=invalidLogin");
-				}
+					if (role.equals("Admin")) {
+						response.sendRedirect("/ST0510_JAD_Assignment_1/GetCustomersServlet");
+					} else {
+						response.sendRedirect(request.getHeader("referer").split("\\?")[0] + "?statusCode=validLogin");
+					}
+		        } else {
+		            response.sendRedirect(request.getHeader("referer").split("\\?")[0] + "?statusCode=invalidLogin");
+		        }
 			}
 			// Step 7: Close connection
 			conn.close();

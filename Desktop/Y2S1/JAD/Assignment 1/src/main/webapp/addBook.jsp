@@ -3,8 +3,8 @@
 <html>
 <head>
     <meta charset="ISO-8859-1">
-    <title>Cart</title>
-    <link rel="stylesheet" href="./css/cart.css">
+	<title>Display all books</title>
+    <link rel="stylesheet" href="./css/addBook.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
@@ -19,15 +19,18 @@
             	out.print("logoutAlert();");
             } else if (message !=null && message.equals("validRegistration")){
             	out.print("registerAlert();");
+            } else if (message !=null && message.equals("validCreation")){
+            	out.print("addedBook();");
             }
        		 %>
-        })
+        })   
     </script>
 </head>
 <body>
-<%@page import="java.util.*"%>
-<%@page import="books.Book"%>
-<%@page import="books.BookGenre" %>
+	<%@page import="java.util.*"%>
+	<%@page import="books.Book"%>
+	<%@page import="books.BookGenre" %>
+	
 	<div class="alerts">
 		<div class='loginAlert hide'>
 	        <span class="fa-solid fa-circle-exclamation"></span>
@@ -48,7 +51,12 @@
 	        <span class="fa-solid fa-circle-check"></span>
 	        <span class="msg">Successfully registered!</span>
 	    </div>
-    </div>
+	    
+	    <div class='addedBook hide'>
+	        <span class="fa-solid fa-circle-check"></span>
+	        <span class="msg">Successfully Added a New Book!</span>
+	    </div>
+	</div>
     
     <div class="navbar">
         <h2 class="logo"><a href="index.jsp">SP BookStore</a></h2>
@@ -56,126 +64,115 @@
         <nav class="navigation">
             <a href="/ST0510_JAD_Assignment_1/GetBooksServlet" class="navLink">Books</a>
             <a href="/ST0510_JAD_Assignment_1/GetCartServlet"id="cart" style="cursor: pointer;" class="navLink">Shopping Cart</a>
-            <% 
-			    Object uIDObj = session.getAttribute("sessUserID");
-			    if (uIDObj != null) {
-			        if (uIDObj instanceof String) {
-			            String uID = (String) uIDObj;
-			%>
-			            <form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class="logoutForm">
-			                <button type="submit" class="btnLogin" id="btnLogin">Logout</button>
-			            </form>
-			<%
-			        } else if (uIDObj instanceof Integer) {
-			            Integer uID = (Integer) uIDObj;
-			%>
-			            <form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class="logoutForm">
-			                <button type="submit" class="btnLogin" id="btnLogin">Logout</button>
-			            </form>
-			<%
-			        }
-			    } else {
-			%>
-			    <button class="btnLogin" id="btnLogin">Login</button>
-			<% } %>
+            <div class="dropdown2">
+			    <a id="admin" class="navLink">Admin</a>
+			    <ul class="dropdown2-menu">
+			        <li><a href="#">Add Book</a></li>
+			        <li><a href="#">Update Book</a></li>
+			        <li><a href="#">Delete Book</a></li>
+			        <li><a href="#">Add Member</a></li>
+			        <li><a href="#">Find Member</a></li>
+			        <li><a href="#">Update Member</a></li>
+			        <li><a href="#">Delete Member</a></li>
+			    </ul>
+			</div>
+
+            <% if (message != null && message.equals("validLogin")) { %>
+            	<form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class=logoutForm>
+            		<button type="submit" class="btnLogin" id="btnLogin">Logout</button>
+            	</form>
+    		<% } else { %>
+       		 	<button class="btnLogin" id="btnLogin">Login</button>
+    		<% } %>
         </nav>
     </div>
-	<div class="description-container">
-	    <div class="main-container">
-	        <table class="cart-table">
-	            <tr>
-	                <th>Book Cover</th>
-	                <th>Title</th>
-	                <th>Author</th>
-	                <th>Genre</th>
-	                <th>Rating</th>
-	                <th>Price</th>
-	                <th>Action</th>
-	            </tr>
-	            <%
-				Object booksInCartObj = session.getAttribute("booksInCart");
-				if (booksInCartObj != null && booksInCartObj instanceof ArrayList) {
-				    ArrayList<Book> booksInCart = (ArrayList<Book>) session.getAttribute("booksInCart");
-				    if (!booksInCart.isEmpty()) {
-				        for (Book book : booksInCart) {
-				%>
-
-	                <tr>
-	                    <td class="image-cell"><img src="placeholder-image.jpg" alt="Book Cover" class="book-cover"></td>
-	                    <td><%= book.getTitle() %></td>
-	                    <td><%= book.getAuthor() %></td>
-	                    <td>
-	                        <%
-	                        ArrayList<BookGenre> allGenres = (ArrayList<BookGenre>) session.getAttribute("genres");
-						    String[] genres = book.getGenre();
-						    for (int k = 0; k < genres.length; k++) {
-						    	int genre = Integer.parseInt(genres[k]);
-						    	//Convert id to name
-						    	for (int x = 0; x < allGenres.size(); x++) {
-						    		BookGenre genreCheck = allGenres.get(x);
-						    		if (genre == genreCheck.getGenreId()) {
-						    			out.print("<span class='genre'>" + genreCheck.getGenreName() + "</span>");
-						    			break;
-						    		}
-						    	}
-						        if (k < genres.length - 1) {
-						            out.print("<span class='dot'> &bull; </span>");
-						        }
-						    }
-							%>
-	                    </td>
-	                    <td>
-	                        <div class="rating-stars">
-	                            <% for (int j = 0; j < book.getRating(); j++) { %>
-	                                <i class="fas fa-star"></i>
-	                            <% }
-	                               for (int j = book.getRating(); j < 5; j++) { %>
-	                                <i class="far fa-star"></i>
-	                            <% } %>
-	                                
-	                        </div>
-	                    </td>
-	                    <td>$<%= book.getPrice() %></td>
-	                    <td>
-	                        <div class="quantity-controls">
-	                            <button class="quantity-btn" onclick="subtractQuantity(this)">-</button>
-	                            <input type="number" class="quantity-input" name="quantity" value="1" min="0">
-	                            <button class="quantity-btn" onclick="addQuantity(this)">+</button>
-	                        </div>
-	                    </td>
-	                </tr>
-	            <%
-			            }
-			        } 
-			    } else {
-			    %>
-			        <tr>
-			            <td class="empty-cart-message" colspan="7">No books in the cart.</td>
-			        </tr>
-			    <% 
-			    }
-			    %>
-	        </table>
-	    </div>
-	</div>
-	
-	<script>
-	  function subtractQuantity(btn) {
-	    var input = btn.nextElementSibling;
-	    var currentValue = parseInt(input.value);
-	    if (currentValue > 1) {
-	      input.value = currentValue - 1;
-	    }
-	  }
-	
-	  function addQuantity(btn) {
-	    var input = btn.previousElementSibling;
-	    var currentValue = parseInt(input.value);
-	    input.value = currentValue + 1;
-	  }
-	</script>
-
-    
+<div class="description-container">
+	<div class="main-container">
+    <div class="form-container">
+        <h2>Add Book</h2>
+        <form action="/ST0510_JAD_Assignment_1/NewBookServlet">
+            <div class="form-group">
+                <label>Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+			    <label>ISBN:</label>
+			    <input type="text" id="isbn" name="isbn" required>
+			</div>
+            <div class="form-group">
+                <label>Author:</label>
+                <input type="text" id="author" name="author" required>
+            </div>
+            <div class="form-group">
+                <label>Price:</label>
+                <input type="number" id="price" name="price" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label>Publisher:</label>
+                <input type="text" id="publisher" name="publisher" required>
+            </div>
+            <div class="form-group">
+                <label>Publication Date:</label>
+                <input type="date" id="pdate" name="pdate" required>
+            </div>
+            <div class="form-group">
+                <label>Genre:</label>
+                <div class="genre-container" style="display: inline-block;">
+					        <% 
+					        String[] selectedGenres = request.getParameterValues("genre");
+					        if (selectedGenres == null) {
+					            selectedGenres = new String[0]; // Set an empty array if no genres are selected
+					        }
+					        %>
+					        
+					        <div class="dropdown">
+					            <div class="select">
+					                <span class="selected">
+					                    Genre
+					                </span>
+					                <div class="caret"></div>
+					            </div>
+					            <ul class="menu" id="genre-names">
+					                <% 
+					                ArrayList<BookGenre> allGenres = (ArrayList<BookGenre>) session.getAttribute("genres");
+					                for (int i = 0; i < allGenres.size(); i++) { 
+					                    BookGenre genre = allGenres.get(i);
+					                    boolean isSelected = Arrays.asList(selectedGenres).contains(String.valueOf(genre.getGenreId()));
+					                %>
+					                <li value="<%= genre.getGenreId() %>" class="<%= isSelected ? "active2" : "" %>">
+					                    <%= genre.getGenreName() %>
+					                    <input type="checkbox" name="genre" value="<%= genre.getGenreId() %>" class="hidden-checkbox" <%= isSelected ? "checked" : "" %>>
+					                </li>
+					                <% } %>
+					            </ul>
+					        </div>
+					    </div>
+            </div>
+            <div class="form-group">
+                <label>Rating:</label>
+                <input type="number" id="rating" name="rating" min="0" max="5" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label>Description:</label>
+                <textarea id="desc" name="desc" required></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Add Book</button>
+            </div>
+        </form>
+        <script>
+		    // Add click event listener to the list items
+		    var listItems = document.querySelectorAll("#genre-names li");
+		    listItems.forEach(function(item) {
+		        item.addEventListener("click", function() {
+		            var checkbox = this.querySelector("input[type='checkbox']");
+		            checkbox.checked = !checkbox.checked;
+		        });
+		    });
+		</script>
+    </div>
+    </div>
+    </div>
     <!--LOGIN & REGISTER-->
     <div class="wrapper-container">
 	    <div class="wrapper">
@@ -256,6 +253,7 @@
 	        </div>
 	    </div>
 	</div>
+
 	<script src="./js/dropdown.js"></script>
     <script src="./js/functions.js"></script>
     <script src="./js/script.js"></script>

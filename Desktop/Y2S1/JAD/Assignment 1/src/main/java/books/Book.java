@@ -11,8 +11,8 @@ public class Book {
 	private String isbn;
 	private String[] genre;
 	private int rating;
-	
-	public Book(int id, String title, String author, double price, int quantity, String publisher, String date,
+	private String description;
+	public Book(int id, String title, String author, double price, int quantity, String publisher, String date, String description,
 			String isbn, String[] genre, int rating) {
 		super();
 		this.id = id;
@@ -21,6 +21,7 @@ public class Book {
 		this.price = price;
 		this.quantity = quantity;
 		this.publisher = publisher;
+		this.description = description;
 		this.date = date;
 		this.isbn = isbn;
 		this.genre = genre;
@@ -34,7 +35,11 @@ public class Book {
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
+	public String getDescription() {
+		return description;
+	}
+	
 	public String getTitle() {
 		return title;
 	}

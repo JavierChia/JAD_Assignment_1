@@ -30,13 +30,18 @@ public class LogoutUserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		javax.servlet.http.HttpSession session = request.getSession(false);
+		String redirectMsg = "";
+		if (session.getAttribute("sessUserRole").equals("Admin")) {
+			redirectMsg = "/ST0510_JAD_Assignment_1/index.jsp?statusCode=loggedOut";
+		} else {
+			redirectMsg = request.getHeader("referer").split("\\?")[0] + "?statusCode=loggedOut";
+		}
         if (session != null) {
-            session.invalidate();
+        	session.removeAttribute("sessUserID");
+            session.removeAttribute("sessUserRole");
+            session.removeAttribute("sessUserName");
         }
-
-        // Redirect the user to the login page
-        response.sendRedirect(request.getContextPath() + "/index.jsp?statusCode=loggedOut");
-
+        response.sendRedirect(redirectMsg);
 	}
 
 	/**
