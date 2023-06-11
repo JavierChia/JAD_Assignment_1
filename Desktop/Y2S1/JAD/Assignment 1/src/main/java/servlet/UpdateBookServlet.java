@@ -19,14 +19,14 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class NewBookServlet
  */
-@WebServlet("/NewBookServlet")
-public class NewBookServlet extends HttpServlet {
+@WebServlet("/UpdateBookServlet")
+public class UpdateBookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NewBookServlet() {
+    public UpdateBookServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -69,9 +69,9 @@ public class NewBookServlet extends HttpServlet {
 			 		}
 
 			 		String sqlStr = 
-			 				"INSERT INTO books"
-			 				+ "(title, author, price, quantity, publisher, publication_date, ISBN, genre, rating, description)"
-			 				+ "VALUES(?,?,?,0,?,?,?,?,?,?);";
+			 				"UPDATE books "
+			 				+ "SET title = ?, author = ?, price = ?, publisher = ?, publication_date = ?, ISBN = ?, genre = ?, rating = ?, description = ? "
+			 				+ "WHERE ISBN = ?";
 			 		PreparedStatement statement = conn.prepareStatement(sqlStr, Statement.RETURN_GENERATED_KEYS);
 			 		statement.setString(1,title);
 			 		statement.setString(2,author);
@@ -82,6 +82,7 @@ public class NewBookServlet extends HttpServlet {
 			 		statement.setString(7,genre);
 			 		statement.setInt(8,rating);
 			 		statement.setString(9,desc);
+			 		statement.setString(10,isbn);
 			 		statement.executeUpdate();
 			 		ResultSet rs = statement.getGeneratedKeys();
 			 		int book_id = 0;
