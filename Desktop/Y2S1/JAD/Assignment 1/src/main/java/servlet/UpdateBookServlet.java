@@ -37,6 +37,13 @@ public class UpdateBookServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 				PrintWriter out = response.getWriter();
+				HttpSession session = request.getSession();
+				
+				if (session.getAttribute("sessUserRole") != null && session.getAttribute("sessUserRole").equals("Admin")) {
+					out.println("User Authorized");
+				} else {
+					response.sendRedirect("error.jsp");
+				}
 
 				try {
 					//Step 1

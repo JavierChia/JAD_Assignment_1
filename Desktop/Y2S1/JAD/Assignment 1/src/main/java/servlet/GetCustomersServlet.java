@@ -38,6 +38,14 @@ public class GetCustomersServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+		
+		if (session.getAttribute("sessUserRole") != null && session.getAttribute("sessUserRole").equals("Admin")) {
+			out.println("User Authorized");
+		} else {
+			response.sendRedirect("error.jsp");
+		}
+		
 		String sqlStr = "SELECT c.first_name, c.last_name, c.email, c.address, IFNULL(o.id, '-') AS order_id FROM customers c LEFT JOIN orders o ON c.id = o.customer_id";
 		try {
 	 		Class.forName("com.mysql.jdbc.Driver");
@@ -62,7 +70,6 @@ public class GetCustomersServlet extends HttpServlet {
 	 			customers.add(new Customer(first_name, last_name, email, address, orders));
 	 		}
 	 		
-	 		HttpSession session = request.getSession();
 	 		session.setAttribute("customers", customers);
 	 		
 	 		response.sendRedirect("/ST0510_JAD_Assignment_1/adminCustomer.jsp");
