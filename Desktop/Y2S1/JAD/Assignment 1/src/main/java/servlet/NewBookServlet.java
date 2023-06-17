@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import books.Book;
+
 /**
  * Servlet implementation class NewBookServlet
  */
@@ -95,10 +97,8 @@ public class NewBookServlet extends HttpServlet {
 			 		if (rs.next()) {
 			 		    book_id = rs.getInt(1);
 			 		}
-			 		
-			 		// Step 6: Process Result
-
-			 		// Step 7: Close connection
+			 		ArrayList<Book> books = (ArrayList<Book>) session.getAttribute("books");
+		 			books.add(new Book(books.size()+1, title,author,price,0,publisher,pdate,desc,isbn, genres, rating));
 			 		conn.close();
 			 	} catch (Exception e) {
 			 		out.println("Error: " + e);

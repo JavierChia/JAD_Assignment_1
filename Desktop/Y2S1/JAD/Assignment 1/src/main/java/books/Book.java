@@ -79,7 +79,10 @@ public class Book {
 	public int getRating() {
 		return rating;
 	}
-
+	
+	public void setRating (int rating) {
+		this.rating=rating;
+	}
 	public void setPublisher(String publisher) {
 		this.publisher = publisher;
 	}
@@ -94,6 +97,10 @@ public class Book {
 
 	public String getIsbn() {
 		return isbn;
+	}
+	
+	public void setDescription (String description) {
+		this.description = description;
 	}
 
 	public void setIsbn(String isbn) {

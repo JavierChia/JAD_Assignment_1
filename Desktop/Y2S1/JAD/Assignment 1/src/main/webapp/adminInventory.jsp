@@ -6,6 +6,89 @@
 	<link rel="stylesheet" href="./css/inventory.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        function showEditButtons() {
+            var addBookButton = document.getElementById("add-book-btn");
+            var editButtons = document.getElementById("edit-buttons");
+            addBookButton.style.display = "none";
+            editButtons.classList.add("show");
+            var form = document.querySelector(".form-wrapper form");
+            form.action = "/ST0510_JAD_Assignment_1/UpdateBookServlet";
+        }
+
+        function hideEditButtons() {
+            var addBookButton = document.getElementById("add-book-btn");
+            var editButtons = document.getElementById("edit-buttons");
+            addBookButton.style.display = "block";
+            editButtons.classList.remove("show");
+            var form = document.querySelector(".form-wrapper form");
+            form.action = "/ST0510_JAD_Assignment_1/NewBookServlet";
+        }
+
+        function cancelEdit() {
+            hideEditButtons();
+
+            // Clear the form values
+            document.getElementById("isbn").value = "";
+            document.getElementById("title").value = "";
+            document.getElementById("author").value = "";
+            document.getElementById("price").value = "";
+            document.getElementById("publisher").value = "";
+            document.getElementById("pdate").value = "";
+
+            var genreCheckboxes = document.querySelectorAll("#genre-names input[type='checkbox']");
+            genreCheckboxes.forEach(function (checkbox) {
+                checkbox.checked = false;
+                checkbox.parentElement.classList.remove("active2");
+            });
+
+            var selected = document.querySelector(".selected");
+            selected.innerText = "Genre";
+
+            document.getElementById("rating").value = "";
+            document.getElementById("desc").value = "";
+        }
+
+
+        function populateForm(isbn, title, author, price, publisher, publicationDate, genres, rating, description) {
+            document.getElementById("isbn").value = isbn;
+            document.getElementById("title").value = title;
+            document.getElementById("author").value = author;
+            document.getElementById("price").value = price;
+            document.getElementById("publisher").value = publisher;
+            document.getElementById("pdate").value = publicationDate;
+
+            var genreCheckboxes = document.querySelectorAll("#genre-names input[type='checkbox']");
+            var selectedGenres = genres.substring(1, genres.length - 1).split(", ").map(Number);
+            var genreNames = [];
+
+            genreCheckboxes.forEach(function (checkbox) {
+                var genreId = parseInt(checkbox.value);
+                var genreName = checkbox.parentElement.innerText.trim();
+
+                if (selectedGenres.includes(genreId)) {
+                    checkbox.checked = true;
+                    checkbox.parentElement.classList.add("active2");
+                    genreNames.push(genreName);
+                } else {
+                    checkbox.checked = false;
+                    checkbox.parentElement.classList.remove("active2");
+                }
+            });
+
+            var selected = document.querySelector(".selected");
+            if (genreNames.length > 0) {
+                selected.innerText = genreNames.join(", ");
+            } else {
+                selected.innerText = "Genre";
+            }
+
+            document.getElementById("rating").value = rating;
+            document.getElementById("desc").value = description;
+
+            showEditButtons();
+        }
+    </script>
 </head>
 
 <body>
@@ -100,10 +183,15 @@
                 <label>Description:</label>
                 <textarea id="desc" name="desc" required></textarea>
             </div>
-            <div class="form-group">
-                <button type="submit">Add Book</button>
-            </div>
+		    <div class="form-group">
+		        <button id="add-book-btn" type="submit">Add Book</button>
+		        <div id="edit-buttons" class="edit-buttons">
+		            <button class="edit" type="submit">Edit Book</button>
+		            <button class="cancel" type="button" onclick="cancelEdit()">Cancel</button>
+		        </div>
+		    </div>
         </form>
+        
         <script>
 		    // Add click event listener to the list items
 		    var listItems = document.querySelectorAll("#genre-names li");
@@ -180,9 +268,11 @@
 			                    </td>
 			                    <td>$<%= book.getPrice() %></td>
 			                    <td class="action-buttons">
-			                        <button class="edit">Edit</button>
-			                        <button class="delete">Delete</button>
-			                        
+			                    	<button class="edit" onclick="populateForm(`<%= book.getIsbn() %>`, `<%= book.getTitle() %>`, `<%= book.getAuthor() %>`, `<%= book.getPrice() %>`, `<%= book.getPublisher() %>`, `<%= book.getDate() %>`, `<%= Arrays.toString(book.getGenre()) %>`, `<%= book.getRating() %>`, `<%= book.getDescription() %>`)">Edit</button>
+			                        <form action="/ST0510_JAD_Assignment_1/DeleteBookServlet">
+									    <input type="hidden" name="isbn" value="<%= book.getIsbn() %>">
+									    <button class="delete" type="submit">Delete</button>
+									</form>                  
 			                    </td>
 			                </tr>
 		                <%
@@ -196,6 +286,10 @@
     <script src="./js/dropdown.js"></script>
     <script src="./js/functions.js"></script>
     <script src="./js/script.js"></script>
+    <script>
+    	hideEditButtons();
+    </script>
+    
 </body>
 
 </html>

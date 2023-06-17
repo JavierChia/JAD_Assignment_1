@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import books.Book;
+
 /**
  * Servlet implementation class NewBookServlet
  */
@@ -62,6 +64,7 @@ public class UpdateBookServlet extends HttpServlet {
 			 		String title = request.getParameter("title");
 			 		String author = request.getParameter("author");
 			 		Double price = Double.parseDouble(request.getParameter("price"));
+			 		int quantity = Integer.parseInt(request.getParameter("quantity"));
 			 		String publisher = request.getParameter("publisher");
 			 		String pdate = request.getParameter("pdate");
 			 		String isbn = request.getParameter("isbn");
@@ -76,19 +79,20 @@ public class UpdateBookServlet extends HttpServlet {
 
 			 		String sqlStr = 
 			 				"UPDATE books "
-			 				+ "SET title = ?, author = ?, price = ?, publisher = ?, publication_date = ?, ISBN = ?, genre = ?, rating = ?, description = ? "
+			 				+ "SET title = ?, author = ?, price = ?, quantity = ? publisher = ?, publication_date = ?, ISBN = ?, genre = ?, rating = ?, description = ? "
 			 				+ "WHERE ISBN = ?";
 			 		PreparedStatement statement = conn.prepareStatement(sqlStr, Statement.RETURN_GENERATED_KEYS);
 			 		statement.setString(1,title);
 			 		statement.setString(2,author);
 			 		statement.setDouble(3,price);
-			 		statement.setString(4,publisher);
-			 		statement.setString(5,pdate);
-			 		statement.setString(6,isbn);
-			 		statement.setString(7,genre);
-			 		statement.setInt(8,rating);
-			 		statement.setString(9,desc);
-			 		statement.setString(10,isbn);
+			 		statement.setInt(4,quantity);
+			 		statement.setString(5,publisher);
+			 		statement.setString(6,pdate);
+			 		statement.setString(7,isbn);
+			 		statement.setString(8,genre);
+			 		statement.setInt(9,rating);
+			 		statement.setString(10,desc);
+			 		statement.setString(11,isbn);
 			 		statement.executeUpdate();
 			 		ResultSet rs = statement.getGeneratedKeys();
 			 		int book_id = 0;
@@ -96,13 +100,26 @@ public class UpdateBookServlet extends HttpServlet {
 			 		    book_id = rs.getInt(1);
 			 		}
 			 		
-			 		// Step 6: Process Result
-
-			 		// Step 7: Close connection
+			 		ArrayList<Book> books = (ArrayList<Book>) session.getAttribute("books");
+			 	    for (Book book : books) {
+			 	        if (book.getIsbn().equals(isbn)) {
+			 	            book.setTitle(title);
+			 	            book.setAuthor(author);
+			 	            book.setPrice(price);
+			 	            book.setQuantity(quantity);
+			 	            book.setPublisher(publisher);
+			 	            book.setDate(pdate);
+			 	            book.setDescription(desc);
+			 	            book.setGenre(genres);
+			 	            book.setRating(rating);
+			 	            break;
+			 	        }
+			 	    }
 			 		conn.close();
 			 	} catch (Exception e) {
 			 		out.println("Error: " + e);
 			 	}
+				response.sendRedirect(request.getHeader("referer").split("\\?")[0] + "?statusCode=validUpdate");
 	}
 
 	/**

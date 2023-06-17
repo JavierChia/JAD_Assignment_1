@@ -7,7 +7,7 @@ dropdowns.forEach(dropdown => {
   const options = dropdown.querySelectorAll('.menu li');
   const selected = dropdown.querySelector('.selected');
   const selectedGenres = []; // Array to store selected genre names
-  
+
   select.addEventListener('click', () => {
     select.classList.toggle('select-clicked');
     caret.classList.toggle('caret-rotate');
@@ -28,8 +28,11 @@ dropdowns.forEach(dropdown => {
       }
 
       // Update the display with selected genres
+      const existingGenres = selected.innerText.split(', '); // Get the existing selected genres
+
       if (selectedGenres.length > 0) {
-        const displayText = selectedGenres.join(', ');
+        const newGenres = selectedGenres.filter(genre => !existingGenres.includes(genre)); // Filter out already selected genres
+        const displayText = existingGenres.concat(newGenres).join(', '); // Combine existing and new genres
         const maxLength = selected.clientWidth > 320 ? 400 : 20; // Adjust the maximum length based on the div size
         selected.innerText = truncateText(displayText, maxLength);
       } else {

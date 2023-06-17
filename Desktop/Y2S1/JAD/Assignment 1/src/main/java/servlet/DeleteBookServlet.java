@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import books.Book;
 
 /**
  * Servlet implementation class DeleteBookServlet
@@ -71,11 +74,16 @@ public class DeleteBookServlet extends HttpServlet {
 	 		if (rs.next()) {
 	 		    book_id = rs.getInt(1);
 	 		}
-	 		
-	 		// Step 6: Process Result
-
-	 		// Step 7: Close connection
 	 		conn.close();
+	 		ArrayList<Book> books = (ArrayList<Book>) session.getAttribute("books");
+	 	    for (int i = 0; i < books.size(); i++) {
+	 	        Book book = books.get(i);
+	 	        if (book.getIsbn().equals(isbn)) {
+	 	            books.remove(i);
+	 	            break; // Exit the loop once the book is removed
+	 	        }
+	 	    }
+	 		response.sendRedirect(request.getHeader("referer").split("\\?")[0] + "?statusCode=validDeletion");
 	 	} catch (Exception e) {
 	 		out.println("Error: " + e);
 	 	}
