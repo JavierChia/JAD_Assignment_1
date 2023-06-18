@@ -60,7 +60,6 @@ public class GetBooksServlet extends HttpServlet {
 	 		Statement stmt = conn.createStatement();
 	 		// Step 5: Execute SQL Command
 	 		String[] searchedGenres = request.getParameterValues("genre");
-	 		System.out.println("Selected Genres: " + searchedGenres);
 	 		String searchTitle = request.getParameter("title");
 	 		if (searchedGenres != null) {
 	 			sqlStr += " WHERE genre LIKE ?";
@@ -74,7 +73,6 @@ public class GetBooksServlet extends HttpServlet {
 	 		if (searchedGenres == null && searchTitle != null) {
 	 			sqlStr += " WHERE title LIKE ?";
 	 		}
-	 		log(sqlStr);
 	 		
 	 		PreparedStatement statement = conn.prepareStatement(sqlStr);
 	 		
@@ -115,7 +113,7 @@ public class GetBooksServlet extends HttpServlet {
 	 			}
 	 			Book book = new Book(id,title,author,price,quantity,publisher,date,description,isbn, genre, rating, image);
 	 			try {
-	 				out.println(book.getImage().length());
+	 				System.out.println(book.getImage().length());
 	 			} catch (Exception e) {
 	 				
 	 			}
@@ -139,7 +137,6 @@ public class GetBooksServlet extends HttpServlet {
 	 		conn.close();
 	 	} catch (Exception e) {
 	 		out.println("Error: " + e);
-	 		out.println(sqlStr);
 	 	}
 	}
 

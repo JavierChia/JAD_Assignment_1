@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import books.Book;
 import books.BookGenre;
+import books.CartItems;
 
 /**
  * Servlet implementation class CheckoutServlet
@@ -54,50 +55,51 @@ public class CheckoutServlet extends HttpServlet {
 //		response.sendRedirect("CheckoutServlet.java");
 		PrintWriter out = response.getWriter();
 		try {
-			
-			//Step 1
-	 		Class.forName("com.mysql.jdbc.Driver");
-	 		
-	 		// Step 2: Define Connection URL
-	 		String connURL = "jdbc:mysql://localhost/bookstore_db?user=root&password=root&serverTimezone=UTC";
-	 		
-	 		// Step 3: Establish connection to URL
-	 		Connection conn = DriverManager.getConnection(connURL);
-	 		
-	 		// Step 4: Create Statement object
-	 		Statement stmt = conn.createStatement();
-	 		
-	 		// Step 5: Execute SQL Command
-	 		int customer = (int) session.getAttribute("customer");
-	 		ArrayList<Integer> cart = (ArrayList<Integer>) session.getAttribute("cart");
-	 		ArrayList<Integer> quantity = (ArrayList<Integer>) session.getAttribute("quantity");
-	 		String sqlStr1 = "INSERT INTO orders (customer_id, order_date) VALUES(?, NOW());";
-	 		PreparedStatement statement1 = conn.prepareStatement(sqlStr1, Statement.RETURN_GENERATED_KEYS);
-	 		statement1.setInt(1,customer);
-	 		statement1.executeUpdate();
-	 		ResultSet rs1 = statement1.getGeneratedKeys();
-	 		int order_id = 0;
-	 		if (rs1.next()) {
-	 		    order_id = rs1.getInt(1);
-	 		}
-	 		
-	 		String sqlStr2 = "INSERT INTO order_items (order_id, book_id, quantity) VALUES (" + order_id + ",?,?);";
-	 		for (int i = 0; i < cart.size(); i++) {
-	 			PreparedStatement statement2 = conn.prepareStatement(sqlStr2);
-		 		statement2.setInt(1,cart.get(i));
-		 		statement2.setInt(2,quantity.get(i));
-		 		statement2.executeUpdate();
-	 		}
-	 		
-	 		// Step 6: Process Result
-	 		
-	 		
-	 		// Step 7: Close connection
-	 		response.sendRedirect("/ST0510_JAD_Assignment_1/books.jsp");
-	 		conn.close();
-	 	} catch (Exception e) {
-	 		out.println("Error: " + e);
-	 	}
+
+            // Step 1: Load JDBC Driver
+            Class.forName("com.mysql.jdbc.Driver");
+
+            // Step 2: Define Connection URL
+            String connURL = "jdbc:mysql://localhost/bookstore_db?user=root&password=root&serverTimezone=UTC";
+
+            // Step 3: Establish connection to URL
+            Connection conn = DriverManager.getConnection(connURL);
+
+            // Step 4: Create Statement object
+            Statement stmt = conn.createStatement();
+
+            // Step 5: Execute SQL Command
+            int customer = (int) session.getAttribute("sessUserID");
+            ArrayList<CartItems> cart = (ArrayList<CartItems>) session.getAttribute("cart");
+            
+            String sqlStr1 = "INSERT INTO orders (customer_id, order_date) VALUES(?, NOW());";
+            PreparedStatement statement1 = conn.prepareStatement(sqlStr1, Statement.RETURN_GENERATED_KEYS);
+            statement1.setInt(1, customer);
+            statement1.executeUpdate();
+            ResultSet rs1 = statement1.getGeneratedKeys();
+            int order_id = 0;
+            if (rs1.next()) {
+                order_id = rs1.getInt(1);
+            }
+
+            String sqlStr2 = "INSERT INTO order_items (order_id, book_id, quantity) VALUES (?, ?, ?);";
+            for (int i = 0; i < cart.size(); i++) {
+                PreparedStatement statement2 = conn.prepareStatement(sqlStr2);
+                statement2.setInt(1, order_id);
+                statement2.setInt(2, cart.get(i).getBookID());
+                statement2.setInt(3, cart.get(i).getQuantity());
+                statement2.executeUpdate();
+            }
+
+            session.removeAttribute("cart");
+            session.removeAttribute("booksInCart");
+
+            // Step 7: Close connection
+            response.sendRedirect("/ST0510_JAD_Assignment_1/books.jsp?statusCode=checkedOut");
+            conn.close();
+        } catch (Exception e) {
+            out.println("Error: " + e);
+        }
 	}
 
 	/**

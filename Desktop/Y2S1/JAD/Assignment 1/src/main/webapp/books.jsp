@@ -183,7 +183,7 @@
 				                <% } %>
 				            </div>
 				            <p class="price">Price: $<%=book.getPrice()%></p>
-				        <form action="add2cart.jsp">
+				        <form action="add2cart.jsp" class="addtocart">
 				            <input type="hidden" name="bookID" value="<%=book.getId()%>">
 				            <button type="submit" class="btn" onclick="">Add to Cart</button>
 				        </form>

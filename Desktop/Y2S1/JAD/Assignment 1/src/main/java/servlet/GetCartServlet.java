@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 
 import books.Book;
 import books.BookGenre;
+import books.CartItems;
 
 /**
  * Servlet implementation class GetCartServlet
@@ -52,14 +53,14 @@ public class GetCartServlet extends HttpServlet {
 
 	 		Connection conn = DriverManager.getConnection(connURL);
 	 		if (session.getAttribute("cart") != null) {
-	 			ArrayList<Integer> cart = (ArrayList<Integer>) session.getAttribute("cart");
-		 		
-		 		String sqlStr = "SELECT * FROM books where id = ?";
-		 		
+	 			ArrayList<CartItems> cart = (ArrayList<CartItems>) session.getAttribute("cart");
+	 			
+				String sqlStr = "SELECT * FROM books WHERE id = ?";
+				
 		 		ArrayList<Book> booksInCart =  new ArrayList<Book>();
 		 		for (int i = 0; i < cart.size(); i++) {
 		            PreparedStatement statement = conn.prepareStatement(sqlStr);
-		            statement.setInt(1, cart.get(i));
+		            statement.setInt(1, cart.get(i).getBookID());
 		            ResultSet rs = statement.executeQuery();
 
 		            if (rs.next()) {
@@ -113,6 +114,7 @@ public class GetCartServlet extends HttpServlet {
 		 		session.setAttribute("booksInCart", booksInCart);
 		 		response.sendRedirect("/ST0510_JAD_Assignment_1/cart.jsp");
 	 		} else {
+	 			
 	 			response.sendRedirect("/ST0510_JAD_Assignment_1/cart.jsp");
 	 		}
 	 		

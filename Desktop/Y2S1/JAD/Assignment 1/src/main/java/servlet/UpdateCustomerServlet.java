@@ -43,7 +43,7 @@ public class UpdateCustomerServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		
-		if (session.getAttribute("sessUserRole") != null && session.getAttribute("sessUserRole").equals("Admin")) {
+		if (session.getAttribute("sessUserRole") != null && (session.getAttribute("sessUserRole").equals("Admin") || session.getAttribute("sessUserRole").equals("Member"))) {
 			out.println("User Authorized");
 		} else {
 			response.sendRedirect("error.jsp");

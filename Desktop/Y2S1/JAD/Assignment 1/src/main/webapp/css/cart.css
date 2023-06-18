@@ -885,10 +885,7 @@ input::-webkit-inner-spin-button {
 }
 
 .book-cover {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 50px;
-   	padding-bottom: 50px;
+    width:100px;
 	object-fit: cover;
 	border: 1px solid black;
 }
@@ -915,4 +912,40 @@ td.image-cell {
 
 .empty-cart-message {
 	text-align: center;
+}
+.total-price {
+    text-align: right;
+}
+
+.total {
+	display: flex;
+	align-items: center;
+    justify-content: right;
+    gap: 20px;
+    margin-right: 2.5%;
+    font-size: 18px;
+    font-weight: 500;
+}
+.total-price-value {
+    display: inline-block;
+}
+
+.checkout-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    width: 100%;
+    max-width: 200px; /* Optional: limit the button's maximum width */
+}
+
+.checkout-button:hover {
+    background-color: #45a049;
 }

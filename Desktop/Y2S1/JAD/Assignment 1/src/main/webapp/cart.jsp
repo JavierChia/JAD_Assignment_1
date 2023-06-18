@@ -2,13 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="ISO-8859-1">
     <title>Cart</title>
     <link rel="stylesheet" href="./css/cart.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
-        $(document).ready(function () { //This is to prevent any jQuery code from running before the document is finished loading (is ready). alternative: $(document).ready(function()
+        $(document).ready(function () {
             <%
     	    String message = request.getParameter("statusCode");
             if(message !=null && message.equals("invalidLogin")) {
@@ -28,6 +27,7 @@
 <%@page import="java.util.*"%>
 <%@page import="books.Book"%>
 <%@page import="books.BookGenre" %>
+<%@page import="books.CartItems" %>
 	<div class="alerts">
 		<div class='loginAlert hide'>
 	        <span class="fa-solid fa-circle-exclamation"></span>
@@ -98,9 +98,24 @@
 				Object booksInCartObj = session.getAttribute("booksInCart");
 				if (booksInCartObj != null && booksInCartObj instanceof ArrayList) {
 				    ArrayList<Book> booksInCart = (ArrayList<Book>) session.getAttribute("booksInCart");
+				    ArrayList<CartItems> cart = (ArrayList<CartItems>) session.getAttribute("cart");
+				    double totalPrice = 0.0;
 				    if (!booksInCart.isEmpty()) {
 				        for (Book book : booksInCart) {
+				            int quantity = 0;
+				            for (CartItems cartItem : cart) {
+				                if (cartItem.getBookID() == book.getId()) {
+				                    quantity = cartItem.getQuantity();
+				                    break;
+				                }
+				            }
+				            if (quantity == 0) {
+			                    continue;
+			                }
+				            double bookTotalPrice = book.getPrice() * quantity;
+				            totalPrice += bookTotalPrice;
 				%>
+
 
 	                <tr>
 	                    <td class="image-cell"><img src=<%="data:image/jpeg;base64," + book.getImage()%> alt="Book Cover" class="book-cover"></td>
@@ -111,14 +126,16 @@
 	                        ArrayList<BookGenre> allGenres = (ArrayList<BookGenre>) session.getAttribute("genres");
 						    String[] genres = book.getGenre();
 						    for (int k = 0; k < genres.length; k++) {
-						    	int genre = Integer.parseInt(genres[k]);
+						    	if (genres[k] != null) {
+						            int genre = Integer.parseInt(genres[k]);
 						    	//Convert id to name
-						    	for (int x = 0; x < allGenres.size(); x++) {
-						    		BookGenre genreCheck = allGenres.get(x);
-						    		if (genre == genreCheck.getGenreId()) {
-						    			out.print("<span class='genre'>" + genreCheck.getGenreName() + "</span>");
-						    			break;
-						    		}
+							    	for (int x = 0; x < allGenres.size(); x++) {
+							    		BookGenre genreCheck = allGenres.get(x);
+							    		if (genre == genreCheck.getGenreId()) {
+							    			out.print("<span class='genre'>" + genreCheck.getGenreName() + "</span>");
+							    			break;
+							    		}
+							    	}
 						    	}
 						        if (k < genres.length - 1) {
 						            out.print("<span class='dot'> &bull; </span>");
@@ -140,15 +157,28 @@
 	                    <td>$<%= book.getPrice() %></td>
 	                    <td>
 	                        <div class="quantity-controls">
-	                            <button class="quantity-btn" onclick="subtractQuantity(this)">-</button>
-	                            <input type="number" class="quantity-input" name="quantity" value="1" min="0">
-	                            <button class="quantity-btn" onclick="addQuantity(this)">+</button>
+	                            <a href="add2cart.jsp?bookID=<%=book.getId()%>&action=subtract"><button class="quantity-btn" onclick="subtractQuantity(this)">-</button></a>
+	                            <input type="number" class="quantity-input" name="quantity" value="<%=quantity%>" min="0">
+	                            <a href="add2cart.jsp?bookID=<%=book.getId()%>&action=add"><button class="quantity-btn" onclick="addQuantity(this)">+</button></a>
 	                        </div>
 	                    </td>
 	                </tr>
 	            <%
 			            }
 			        } 
+				
+				%>
+		        <tr>
+		            <td class="total-price" colspan="7" >
+		                <div class="total">
+		                Total: $<%= totalPrice %>
+		                <form action="/ST0510_JAD_Assignment_1/CheckoutServlet">
+		                	<button class="checkout-button">Checkout</button>
+		                </form>
+		                </div>
+		            </td>
+		        </tr>
+				<%
 			    } else {
 			    %>
 			        <tr>
