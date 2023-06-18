@@ -79,7 +79,7 @@ public class UpdateBookServlet extends HttpServlet {
 
 			 		String sqlStr = 
 			 				"UPDATE books "
-			 				+ "SET title = ?, author = ?, price = ?, quantity = ? publisher = ?, publication_date = ?, ISBN = ?, genre = ?, rating = ?, description = ? "
+			 				+ "SET title = ?, author = ?, price = ?, quantity = ?, publisher = ?, publication_date = ?, ISBN = ?, genre = ?, rating = ?, description = ? "
 			 				+ "WHERE ISBN = ?";
 			 		PreparedStatement statement = conn.prepareStatement(sqlStr, Statement.RETURN_GENERATED_KEYS);
 			 		statement.setString(1,title);

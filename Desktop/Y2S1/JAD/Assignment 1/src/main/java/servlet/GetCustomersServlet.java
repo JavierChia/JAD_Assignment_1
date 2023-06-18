@@ -46,7 +46,7 @@ public class GetCustomersServlet extends HttpServlet {
 			response.sendRedirect("error.jsp");
 		}
 		
-		String sqlStr = "SELECT c.first_name, c.last_name, c.email, c.address, IFNULL(o.id, '-') AS order_id FROM customers c LEFT JOIN orders o ON c.id = o.customer_id";
+		String sqlStr = "SELECT c.id, c.name, c.email, IFNULL(c.address, '-') AS address, c.password, IFNULL(o.id, '-') AS order_id FROM customers c LEFT JOIN orders o ON c.id = o.customer_id";
 		try {
 	 		Class.forName("com.mysql.jdbc.Driver");
 	 		
@@ -61,13 +61,14 @@ public class GetCustomersServlet extends HttpServlet {
 	 		// Step 6: Process Result
 	 		ArrayList<Customer> customers =  new ArrayList<Customer>();
 	 		while (rs.next()) {
-	 			String first_name = rs.getString("first_name");
-	 			String last_name = rs.getString("last_name");
+	 			Integer id = rs.getInt("id");
+	 			String name = rs.getString("name");
 	 			String email = rs.getString("email");
 	 			String address = rs.getString("address");
 	 			String orders = rs.getString("order_id");
+	 			String password = rs.getString("password");
 	 			
-	 			customers.add(new Customer(first_name, last_name, email, address, orders));
+	 			customers.add(new Customer(id, name, email, address, orders, password));
 	 		}
 	 		
 	 		session.setAttribute("customers", customers);

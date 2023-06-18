@@ -56,11 +56,12 @@
             <a href="/ST0510_JAD_Assignment_1/GetBooksServlet" class="navLink">Books</a>
             <a href="/ST0510_JAD_Assignment_1/GetCartServlet"id="cart" style="cursor: pointer;" class="navLink">Shopping Cart</a>
             <% 
-			    Object uIDObj = session.getAttribute("sessUserID");
+    			Object uIDObj = session.getAttribute("sessUserID");
 			    if (uIDObj != null) {
 			        if (uIDObj instanceof String) {
 			            String uID = (String) uIDObj;
 			%>
+						<a href="account.jsp" class="navLink">Account</a>
 			            <form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class="logoutForm">
 			                <button type="submit" class="btnLogin" id="btnLogin">Logout</button>
 			            </form>
@@ -68,6 +69,7 @@
 			        } else if (uIDObj instanceof Integer) {
 			            Integer uID = (Integer) uIDObj;
 			%>
+						<a href="account.jsp" class="navLink">Account</a>
 			            <form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class="logoutForm">
 			                <button type="submit" class="btnLogin" id="btnLogin">Logout</button>
 			            </form>
@@ -237,21 +239,14 @@
 	                    <span class="icon">
 	                        <i class="fa-solid fa-user"></i>
 	                    </span>
-	                    <input type="text" id="firstName" name="firstName" required>
-	                    <label>First Name</label>
-	                </div>
-	                <div class="input-box">
-	                    <span class="icon">
-	                        <i class="fa-solid fa-user"></i>
-	                    </span>
-	                    <input type="text" id="lastName" name="lastName" required>
-	                    <label>Last Name</label>
+	                    <input type="text" id="name" name="name" required>
+	                    <label>Name</label>
 	                </div>
 	                <div class="input-box">
 	                    <span class="icon">
 	                        <i class="fa-solid fa-envelope"></i>
 	                    </span>
-	                    <input type="email" id="email" name="registerEmail" required>
+	                    <input type="email" id="email" name="email" required>
 	                    <label>Email</label>
 	                </div>
 	
@@ -259,7 +254,7 @@
 	                    <span class="icon">
 	                        <i class="fa-solid fa-lock"></i>
 	                    </span>
-	                    <input type="password" id="password" name="registerPassword" required>
+	                    <input type="password" id="password" name="password" required>
 	                    <label>Password</label>
 	                </div>
 	

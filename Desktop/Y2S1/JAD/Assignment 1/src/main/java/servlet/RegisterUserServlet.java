@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
+
+import customers.Customer;
 /**
  * Servlet implementation class RegisterUserServlet
  */
@@ -37,10 +40,11 @@ public class RegisterUserServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		
-		String firstName = request.getParameter("firstName");
-		String lastName =  request.getParameter("lastName");
-		String email = request.getParameter("registerEmail");
-		String password = request.getParameter("registerPassword");
+		String name =  request.getParameter("name");
+		String address ="";
+		String orders="-";
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
 		String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 		
 		try {
@@ -48,20 +52,26 @@ public class RegisterUserServlet extends HttpServlet {
 			String connURL = "jdbc:mysql://localhost/bookstore_db?user=root&password=root&serverTimezone=UTC";
 			Connection conn = DriverManager.getConnection(connURL);
 			
-			String sql = "INSERT INTO customers (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";
+			String sql = "INSERT INTO customers (name, email, password) VALUES(?, ?, ?)";
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, firstName);
-			statement.setString(2, lastName);
-			statement.setString(3, email);
-			statement.setString(4, hashedPassword);
+			statement.setString(1, name);
+			statement.setString(2, email);
+			statement.setString(3, hashedPassword);
 			int rowsAffected = statement.executeUpdate();
 
 		    if (rowsAffected == 1) {
-		        response.sendRedirect("/ST0510_JAD_Assignment_1/index.jsp?statusCode=validRegistration&hashedpw="+hashedPassword);
+		    	String referer = request.getHeader("referer");
+	            if (referer != null && referer.contains("adminCustomer.jsp")) {
+	            	response.sendRedirect("/ST0510_JAD_Assignment_1/adminCustomer.jsp?statusCode=validRegistration");
+	            } else {
+	            	response.sendRedirect("/ST0510_JAD_Assignment_1/index.jsp?statusCode=validRegistration");
+	            }
 		    } else {
 		    	response.sendRedirect("/ST0510_JAD_Assignment_1/index.jsp?statusCode=invalidRegistration");
 		    }
 			// Step 7: Close connection
+		    ArrayList<Customer> customers = (ArrayList<Customer>) session.getAttribute("customers");
+ 			customers.add(new Customer(customers.size()+1, name, email, address, orders, hashedPassword));
 			conn.close();
 		} catch (Exception e) {
 			out.println("Error: " + e);

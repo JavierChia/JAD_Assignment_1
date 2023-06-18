@@ -218,15 +218,8 @@
 	                    <span class="icon">
 	                        <i class="fa-solid fa-user"></i>
 	                    </span>
-	                    <input type="text" id="firstName" name="firstName" required>
-	                    <label>First Name</label>
-	                </div>
-	                <div class="input-box">
-	                    <span class="icon">
-	                        <i class="fa-solid fa-user"></i>
-	                    </span>
-	                    <input type="text" id="lastName" name="lastName" required>
-	                    <label>Last Name</label>
+	                    <input type="text" id="name" name="name" required>
+	                    <label>Name</label>
 	                </div>
 	                <div class="input-box">
 	                    <span class="icon">
