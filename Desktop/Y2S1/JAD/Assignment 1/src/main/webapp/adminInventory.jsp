@@ -53,6 +53,7 @@
             document.getElementById("quantity").value = "";
             document.getElementById("publisher").value = "";
             document.getElementById("pdate").value = "";
+            document.getElementById("image").value="";
 
             var genreCheckboxes = document.querySelectorAll("#genre-names input[type='checkbox']");
             genreCheckboxes.forEach(function (checkbox) {
@@ -68,7 +69,7 @@
         }
 
 
-        function populateForm(isbn, title, author, price, quantity, publisher, publicationDate, genres, rating, description) {
+        function populateForm(isbn, title, author, price, quantity, publisher, publicationDate, genres, rating, description, image) {
             document.getElementById("isbn").value = isbn;
             document.getElementById("title").value = title;
             document.getElementById("author").value = author;
@@ -104,7 +105,13 @@
 
             document.getElementById("rating").value = rating;
             document.getElementById("desc").value = description;
-
+            
+            var imageElement = document.querySelector(".book-cover");
+            imageElement.src = "data:image/jpeg;base64," + image;
+			
+            var imageInput = document.getElementById("image");
+            imageInput.value = image; 
+            
             showEditButtons();
         }
     </script>
@@ -208,6 +215,7 @@
             </div>
             <div class="form-group">
                 <label>Image:</label>
+                <img src="" alt="Book Cover" class="book-cover">
                 <input type="file" id="image" name="image" accept="image/png, image/jpeg image/jpg">
             </div>
 		    <div class="form-group">
@@ -242,7 +250,8 @@
 			                <th>Rating</th>
 			                <th>Price</th>
 			                <th>Quantity</th>
-			                <th>Action</th>
+			                <th>Edit</th>
+			                <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody id="table-body">
@@ -298,6 +307,8 @@
 
 			                    <td class="action-buttons">
 			                    	<button class="edit" onclick="populateForm(`<%= book.getIsbn() %>`, `<%= book.getTitle() %>`, `<%= book.getAuthor() %>`, `<%= book.getPrice() %>`, `<%= book.getQuantity() %>`, `<%= book.getPublisher() %>`, `<%= book.getDate() %>`, `<%= Arrays.toString(book.getGenre()) %>`, `<%= book.getRating() %>`, `<%= book.getDescription() %>`, `<%= book.getImage() %>`)">Edit</button>
+			                    </td>
+			                    <td class="action-buttons">
 			                        <form action="/ST0510_JAD_Assignment_1/DeleteBookServlet">
 									    <input type="hidden" name="isbn" value="<%= book.getIsbn() %>">
 									    <button class="delete" type="submit">Delete</button>

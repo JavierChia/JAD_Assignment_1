@@ -55,7 +55,7 @@
 			        if (uIDObj instanceof String) {
 			            String uID = (String) uIDObj;
 			%>
-						<a href="/ST0510_JAD_Assignment_1/AccountServlet" class="navLink">Account</a>
+						<a href="account.jsp" class="navLink">Account</a>
 			            <form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class="logoutForm">
 			                <button type="submit" class="btnLogin" id="btnLogin">Logout</button>
 			            </form>
@@ -63,7 +63,7 @@
 			        } else if (uIDObj instanceof Integer) {
 			            Integer uID = (Integer) uIDObj;
 			%>
-						<a href="/ST0510_JAD_Assignment_1/AccountServlet" class="navLink">Account</a>
+						<a href="account.jsp" class="navLink">Account</a>
 			            <form action='/ST0510_JAD_Assignment_1/LogoutUserServlet' class="logoutForm">
 			                <button type="submit" class="btnLogin" id="btnLogin">Logout</button>
 			            </form>

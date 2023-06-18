@@ -24,13 +24,13 @@ import customers.Customer;
  * Servlet implementation class UpdateCustomerServlet
  */
 @WebServlet("/UpdateCustomerServlet")
-public class UpdateCustomerServlet extends HttpServlet {
+public class AdminUpdateCustomerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateCustomerServlet() {
+    public AdminUpdateCustomerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,7 +43,7 @@ public class UpdateCustomerServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		
-		if (session.getAttribute("sessUserRole") != null && session.getAttribute("sessUserRole").equals("Member")) {
+		if (session.getAttribute("sessUserRole") != null && session.getAttribute("sessUserRole").equals("Admin")) {
 			out.println("User Authorized");
 		} else {
 			response.sendRedirect("error.jsp");
@@ -107,10 +107,25 @@ public class UpdateCustomerServlet extends HttpServlet {
 	
 	        if (rowsUpdated > 0) {
 	            out.println("User information updated successfully.");
-				session.setAttribute("sessUserName", name);
-				session.setAttribute("sessUserPassword", password);
-				session.setAttribute("sessUserEmail", email);
-				session.setAttribute("sessUserAddress", address);
+	            ArrayList<Customer> customers = (ArrayList<Customer>) session.getAttribute("customers");
+		 	    for (Customer customer: customers) {
+		 	        if (customer.getID().equals(customerID)) {
+						if (name != null && !name.isEmpty()) {
+					        customer.setName(name);
+					    }
+					    if (email != null && !email.isEmpty()) {
+					        customer.setEmail(email);
+					    }
+					    if (password != null && !password.isEmpty()) {
+					        customer.setPassword(password);
+					    }
+					    if (address != null && !address.isEmpty()) {
+					        customer.setAddress(address);
+					    }
+					    break;
+		 	        }
+		 	    }
+		 	   session.setAttribute("customers", customers);
 	        } else {
 	            out.println("No changes were made.");
 	        }

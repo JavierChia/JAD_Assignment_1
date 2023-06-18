@@ -15,7 +15,7 @@
         editButtons.classList.add("show");
 
         var form = document.querySelector(".form-wrapper form");
-        form.action = "/ST0510_JAD_Assignment_1/UpdateCustomerServlet";
+        form.action = "/ST0510_JAD_Assignment_1/AdminUpdateCustomerServlet";
 
         // Remove the "readonly" attribute from the customerId input field
         document.getElementById("customerId").removeAttribute("readonly");
