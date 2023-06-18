@@ -6,6 +6,57 @@
     <link rel="stylesheet" href="./css/customer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+    function showEditButtons() {
+        var addCustomerButton = document.getElementById("add-customer-btn");
+        var editButtons = document.getElementById("edit-buttons");
+
+        addCustomerButton.style.display = "none";
+        editButtons.classList.add("show");
+
+        var form = document.querySelector(".form-wrapper form");
+        form.action = "/ST0510_JAD_Assignment_1/UpdateCustomerServlet";
+
+        // Remove the "readonly" attribute from the customerId input field
+        document.getElementById("customerId").removeAttribute("readonly");
+    }
+
+    function hideEditButtons() {
+        var addCustomerButton = document.getElementById("add-customer-btn");
+        var editButtons = document.getElementById("edit-buttons");
+
+        addCustomerButton.style.display = "block";
+        editButtons.classList.remove("show");
+
+        var form = document.querySelector(".form-wrapper form");
+        form.action = "/ST0510_JAD_Assignment_1/RegisterUserServlet";
+
+        // Add the "readonly" attribute to the customerId input field
+        document.getElementById("customerId").setAttribute("readonly", true);
+    }
+
+
+
+        function cancelEdit() {
+            hideEditButtons();
+
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("address").value = "";
+            document.getElementById("password").value = "";
+        }
+
+
+        function populateForm(id, name, email, address, password) {
+            document.getElementById("name").value = name;
+            document.getElementById("email").value = email;
+            document.getElementById("address").value = address;
+            document.getElementById("password").value = password;
+            document.getElementById("customerId").value = id;
+            
+            showEditButtons();
+        }
+      </script>
 </head>
 
 <body>
@@ -35,35 +86,39 @@
         <div class="content">
             <h2 style="margin-bottom: 5px;">Customers</h2>
             <div class="form-wrapper">
+            <form action="/ST0510_JAD_Assignment_1/RegisterUserServlet">
+            	<input type="hidden" id="customerId" name="customerId" value="">
                 <div class="form-group">
                     <label for="name">Name:</label>
-                    <input type="text" id="name" placeholder="Enter name">
+                    <input type="text" id="name" name="name">
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="text" id="email" placeholder="Enter email">
+                    <input type="text" id="email" name="email">
                 </div>
                 <div class="form-group">
                     <label for="address">Address:</label>
-                    <input type="text" id="address" placeholder="Enter address">
+                    <input type="text" id="address" name="address">
                 </div>
+		        <div class="form-group">
+		        	<label for="address">Password:</label>
+                    <input type="text" id="password" name="password">
+		        </div>
                 <div class="form-group">
-                    <label for="phone">Phone:</label>
-                    <input type="text" id="phone" placeholder="Enter phone">
-                </div>
-                <div class="form-group">
-                    <label for="orders">Orders:</label>
-                    <input type="text" id="orders" placeholder="Enter orders">
-                </div>
-                <div class="form-group">
-                    <button id="create">Add Customer</button>
-                </div>
+			        <button id="add-customer-btn" type="submit">Add Customer</button>
+			        <div id="edit-buttons" class="edit-buttons">
+			            <button class="edit" type="submit">Edit Customer</button>
+			            <button class="cancel" type="button" onclick="cancelEdit()">Cancel</button>
+			        </div>
+		    	</div>
+		    	</form>
             </div>
 
             <div class="table-wrapper">
                 <table class="table">
                     <thead>
                         <tr>
+                        	<th>ID</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Address</th>
@@ -72,18 +127,27 @@
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                        <!-- Placeholder customers -->
-                        
-	                        <%
-								ArrayList<Customer> customers = (ArrayList<Customer>)session.getAttribute("customers");
-								for (Customer customer : customers){
-									out.print("<tr><td>" + customer.getName() + "</td>");
-									out.print("<td>" + customer.getEmail() + "</td>");
-									out.print("<td>" + customer.getAddress() + "</td>");
-									out.print("<td>" + customer.getOrders() + "</td>");
-									out.print("<td class=\"action-buttons\"><button class=\"edit\">Edit</button><button class=\"delete\">Delete</button></td></tr>");
-								}
-							%>
+	                    <%    
+		                    ArrayList<Customer> customers = (ArrayList<Customer>)session.getAttribute("customers");
+							for (Customer customer : customers){
+						%>
+							<tr>
+								<td><%= customer.getID() %></td>
+			                    <td><%= customer.getName() %></td>
+			                    <td><%= customer.getEmail() %></td>
+			                    <td><%= customer.getAddress() %></td>
+			                    <td><%= customer.getOrders() %></td>
+			                    <td class="action-buttons">
+			                    	<button class="edit" onclick="populateForm(`<%= customer.getID() %>`,`<%= customer.getName() %>`, `<%= customer.getEmail() %>`, `<%= customer.getAddress() %>`, `<%= customer.getPassword() %>`)">Edit</button>
+			                        <form action="/ST0510_JAD_Assignment_1/DeleteCustomerServlet">
+									    <input type="hidden" name="isbn" value="<%= customer.getEmail() %>">
+									    <button class="delete" type="submit">Delete</button>
+									</form>                  
+			                    </td>
+			                </tr>
+		                <%
+						}
+		                %>
                     </tbody>
                 </table>
             </div>

@@ -229,3 +229,25 @@ body {
 .side-navigation a:hover {
     text-decoration: none;
 }
+
+.edit-buttons {
+    display: none;
+}
+
+.edit-buttons.show {
+    display: flex;
+}
+
+.edit-buttons button {
+    margin-right: 5px;
+}
+
+.edit-buttons button.cancel {
+    background-color: red;
+    color: white;
+}
+
+.edit-buttons button.edit {
+    background-color: blue;
+    color: white;
+}

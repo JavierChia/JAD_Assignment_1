@@ -34,12 +34,20 @@ public class LogoutUserServlet extends HttpServlet {
 		if (session.getAttribute("sessUserRole").equals("Admin")) {
 			redirectMsg = "/ST0510_JAD_Assignment_1/index.jsp?statusCode=loggedOut";
 		} else {
-			redirectMsg = request.getHeader("referer").split("\\?")[0] + "?statusCode=loggedOut";
+			String referer = request.getHeader("referer");
+            if (referer != null && referer.contains("account.jsp")) {
+                redirectMsg = "/ST0510_JAD_Assignment_1/index.jsp?statusCode=loggedOut";
+            } else {
+            	redirectMsg = request.getHeader("referer").split("\\?")[0] + "?statusCode=loggedOut";
+            }
 		}
         if (session != null) {
         	session.removeAttribute("sessUserID");
             session.removeAttribute("sessUserRole");
             session.removeAttribute("sessUserName");
+            session.removeAttribute("sessUserEmail");
+            session.removeAttribute("sessUserAddress");
+            session.removeAttribute("sessUserPassword");
         }
         response.sendRedirect(redirectMsg);
 	}

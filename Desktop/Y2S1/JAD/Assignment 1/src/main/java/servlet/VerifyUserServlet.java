@@ -38,7 +38,7 @@ public class VerifyUserServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		
-		String first_name, last_name, role;
+		String name, role, address;
 		int id;
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -55,14 +55,18 @@ public class VerifyUserServlet extends HttpServlet {
 			ResultSet rs = statement.executeQuery();
 			
 			while (rs.next()) {
-				first_name = rs.getString("first_name");
-				last_name = rs.getString("last_name");
+				name = rs.getString("name");
 				role = rs.getString("role");
 				id = rs.getInt("id");
+				email = rs.getString("email");
+				address = rs.getString("address");
 				if(BCrypt.checkpw(password,rs.getString("password"))){
 					session.setAttribute("sessUserID", id);
 					session.setAttribute("sessUserRole", role);
-					session.setAttribute("sessUserName", first_name + ' ' + last_name);
+					session.setAttribute("sessUserName", name);
+					session.setAttribute("sessUserPassword", password);
+					session.setAttribute("sessUserEmail", email);
+					session.setAttribute("sessUserAddress", address);
 					if (role.equals("Admin")) {
 						response.sendRedirect("/ST0510_JAD_Assignment_1/GetCustomersServlet");
 					} else {
