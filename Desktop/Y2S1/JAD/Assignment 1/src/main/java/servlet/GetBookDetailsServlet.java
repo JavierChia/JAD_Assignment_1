@@ -70,7 +70,8 @@ public class GetBookDetailsServlet extends HttpServlet {
 	 			String isbn = rs.getString("isbn");
 	 			int rating = rs.getInt("rating");
 	 			String[] genre = rs.getString("genre").substring(1).split("-");
-	 			books.add(new Book(id,title,author,price,quantity,publisher,date,description,isbn, genre, rating));
+	 			String image;
+	 			books.add(new Book(id,title,author,price,quantity,publisher,date,description,isbn, genre, rating, image));
 	 		}
 	 		
 	 		HttpSession session = request.getSession();

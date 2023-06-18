@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.sql.Blob;
+import java.util.Base64;
+
 import books.Book;
 import books.BookGenre;
 
@@ -104,7 +107,20 @@ public class GetBooksServlet extends HttpServlet {
 	 			String isbn = rs.getString("isbn");
 	 			int rating = rs.getInt("rating");
 	 			String[] genre = rs.getString("genre").substring(1).split("-");
-	 			books.add(new Book(id,title,author,price,quantity,publisher,date,description,isbn, genre, rating));
+	 			Blob blob = rs.getBlob("image");
+	 			String image = "";
+	 			if (blob != null) {
+	 				byte[] imageData = blob.getBytes(1, (int) blob.length());
+		 		    image = Base64.getEncoder().encodeToString(imageData);
+	 			}
+	 			Book book = new Book(id,title,author,price,quantity,publisher,date,description,isbn, genre, rating, image);
+	 			try {
+	 				out.println(book.getImage().length());
+	 			} catch (Exception e) {
+	 				
+	 			}
+	 			books.add(book);
+	 			
 	 		}
 	 		
 	 		ArrayList<BookGenre> genres = new ArrayList<BookGenre>();
@@ -119,7 +135,7 @@ public class GetBooksServlet extends HttpServlet {
 	 		session.setAttribute("books", books);
 	 		session.setAttribute("genres", genres);
 	 		// Step 7: Close connection
-	 		response.sendRedirect("/ST0510_JAD_Assignment_1/books.jsp?");
+	 		response.sendRedirect("/ST0510_JAD_Assignment_1/books.jsp");
 	 		conn.close();
 	 	} catch (Exception e) {
 	 		out.println("Error: " + e);

@@ -124,7 +124,7 @@
         <div class="content">
             <h2 style="margin-bottom: 5px;">Inventory</h2>
             <div class="form-wrapper">
-        <form action="/ST0510_JAD_Assignment_1/NewBookServlet">
+        <form action="/ST0510_JAD_Assignment_1/NewBookServlet" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Title:</label>
                 <input type="text" id="title" name="title" required>
@@ -189,6 +189,10 @@
             <div class="form-group">
                 <label>Description:</label>
                 <textarea id="desc" name="desc" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Image:</label>
+                <input type="file" id="image" name="image" accept="image/png, image/jpeg image/jpg">
             </div>
 		    <div class="form-group">
 		        <button id="add-book-btn" type="submit">Add Book</button>

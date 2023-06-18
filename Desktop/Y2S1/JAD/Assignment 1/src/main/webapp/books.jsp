@@ -84,7 +84,7 @@
     <div class="description-container">
 	    <div class="main-container">
 	        <div class="sub-container-1">
-	            <div class="title">Search for a DVD!</div>
+	            <div class="title">Search for a Book!</div>
 	
 	            <div class="bottom-row">
 		            <form action="/ST0510_JAD_Assignment_1/GetBooksServlet">
@@ -150,7 +150,7 @@
 				%>
 				<a href="/ST0510_JAD_Assignment_1/GetBookDetailsServlet?bookID=<%=book.getId()%>">
 				    <div class="card">
-				            <img src="placeholder-image.jpg" alt="Book Cover">
+				            <img src=<%="data:image/jpeg;base64," + book.getImage()%> alt="Book Cover">
 				            <h3><%=book.getTitle()%></h3>
 				            <p class="author"><%=book.getAuthor()%></p>
 				            <div class="genres">

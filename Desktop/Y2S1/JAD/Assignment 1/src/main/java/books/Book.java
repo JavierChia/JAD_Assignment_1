@@ -12,8 +12,9 @@ public class Book {
 	private String[] genre;
 	private int rating;
 	private String description;
+	private String image;
 	public Book(int id, String title, String author, double price, int quantity, String publisher, String date, String description,
-			String isbn, String[] genre, int rating) {
+			String isbn, String[] genre, int rating, String image) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -26,6 +27,15 @@ public class Book {
 		this.isbn = isbn;
 		this.genre = genre;
 		this.rating = rating;
+		this.image = image;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public int getId() {
