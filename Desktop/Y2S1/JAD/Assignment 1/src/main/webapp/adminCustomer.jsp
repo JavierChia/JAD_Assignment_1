@@ -140,7 +140,7 @@
 			                    <td class="action-buttons">
 			                    	<button class="edit" onclick="populateForm(`<%= customer.getID() %>`,`<%= customer.getName() %>`, `<%= customer.getEmail() %>`, `<%= customer.getAddress() %>`, `<%= customer.getPassword() %>`)">Edit</button>
 			                        <form action="/ST0510_JAD_Assignment_1/DeleteCustomerServlet">
-									    <input type="hidden" name="isbn" value="<%= customer.getEmail() %>">
+									    <input type="hidden" name="id" value="<%= customer.getID() %>">
 									    <button class="delete" type="submit">Delete</button>
 									</form>                  
 			                    </td>
