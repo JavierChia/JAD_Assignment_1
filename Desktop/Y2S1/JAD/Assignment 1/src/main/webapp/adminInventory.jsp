@@ -295,6 +295,7 @@
 			                    </td>
 			                    <td>$<%= book.getPrice() %></td>
 			                    <td><%= book.getQuantity() %></td>
+
 			                    <td class="action-buttons">
 			                    	<button class="edit" onclick="populateForm(`<%= book.getIsbn() %>`, `<%= book.getTitle() %>`, `<%= book.getAuthor() %>`, `<%= book.getPrice() %>`, `<%= book.getQuantity() %>`, `<%= book.getPublisher() %>`, `<%= book.getDate() %>`, `<%= Arrays.toString(book.getGenre()) %>`, `<%= book.getRating() %>`, `<%= book.getDescription() %>`, `<%= book.getImage() %>`)">Edit</button>
 			                        <form action="/ST0510_JAD_Assignment_1/DeleteBookServlet">

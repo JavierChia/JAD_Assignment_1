@@ -78,7 +78,7 @@
     <div class="side-navigation">
         <div class="logo">SP BookStore</div>
        	<a href="adminCustomer.jsp"><div class="nav-item <% String currentPage = request.getRequestURI(); if (currentPage.contains("Customer")) out.print("active"); %>">Customers</div></a>
-        <a href="adminInventory.jsp"><div class="nav-item <% if (currentPage.contains("Inventory")) out.print("active"); %>">Inventory</div></a>
+        <a href="GetBooksServlet?next=adminInventory.jsp"><div class="nav-item <% if (currentPage.contains("Inventory")) out.print("active"); %>">Inventory</div></a>
        	<a href="adminOrders.jsp"><div class="nav-item <% if (currentPage.contains("Orders")) out.print("active"); %>">Orders</div></a>
     </div>
 

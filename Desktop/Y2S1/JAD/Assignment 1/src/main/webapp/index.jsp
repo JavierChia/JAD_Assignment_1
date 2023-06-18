@@ -47,7 +47,7 @@
         <h2 class="logo"><a href="index.jsp">SP BookStore</a></h2>
 
         <nav class="navigation">
-            <a href="/ST0510_JAD_Assignment_1/GetBooksServlet" class="navLink">Books</a>
+            <a href="/ST0510_JAD_Assignment_1/GetBooksServlet?next=books.jsp" class="navLink">Books</a>
              <a href="/ST0510_JAD_Assignment_1/GetCartServlet"id="cart" style="cursor: pointer;" class="navLink">Shopping Cart</a>
             <% 
     			Object uIDObj = session.getAttribute("sessUserID");
