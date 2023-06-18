@@ -155,7 +155,7 @@
             </div>
             <div class="form-group" id="quantity-group">
 			    <label>Quantity:</label>
-			    <input type="number" id="quantity" name="quantity" required>
+			    <input type="number" id="quantity" name="quantity">
 			</div>
             <div class="form-group">
                 <label>Publisher:</label>
