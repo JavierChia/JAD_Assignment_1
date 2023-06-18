@@ -102,10 +102,11 @@
 	                String rating = String.valueOf(book.getRating());
 	                String description = book.getDescription();
 	                String[] genres = book.getGenre();
+	                String image = book.getImage();
 	    %>
 	    <div class="card">
 	        <div class="cover">
-	            <img src="placeholder.jpg" alt="Book Cover">
+	            <img src=<%="data:image/jpeg;base64," + book.getImage()%> alt="Book Cover">
 	        </div>
 	        <div class="details">
 	            <h3><%= title %></h3>

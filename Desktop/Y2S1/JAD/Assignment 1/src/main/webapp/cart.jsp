@@ -103,7 +103,7 @@
 				%>
 
 	                <tr>
-	                    <td class="image-cell"><img src="placeholder-image.jpg" alt="Book Cover" class="book-cover"></td>
+	                    <td class="image-cell"><img src=<%="data:image/jpeg;base64," + book.getImage()%> alt="Book Cover" class="book-cover"></td>
 	                    <td><%= book.getTitle() %></td>
 	                    <td><%= book.getAuthor() %></td>
 	                    <td>

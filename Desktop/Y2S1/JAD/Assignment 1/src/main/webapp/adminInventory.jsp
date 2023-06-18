@@ -251,7 +251,7 @@
 							for (Book book : books){
 						%>
 							<tr>
-			                    <td class="image-cell"><img src="placeholder-image.jpg" alt="Book Cover" class="book-cover"></td>
+			                    <td class="image-cell"><img src=<%="data:image/jpeg;base64," + book.getImage()%> alt="Book Cover" class="book-cover"></td>
 			                    <td><%= truncateTitle(book.getTitle(), 20) %></td>
 			                    <%!
 								    public String truncateTitle(String title, int maxLength) {

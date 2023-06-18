@@ -84,7 +84,7 @@ public class GetBookDetailsServlet extends HttpServlet {
 	 		HttpSession session = request.getSession();
 	 		session.setAttribute("books", books);
 	 		
-	 		response.sendRedirect("/ST0510_JAD_Assignment_1/bookDetails.jsp?");
+	 		response.sendRedirect("/ST0510_JAD_Assignment_1/bookDetails.jsp");
 	 		conn.close();
 	 	} catch (Exception e) {
 	 		out.println("Error: " + e);

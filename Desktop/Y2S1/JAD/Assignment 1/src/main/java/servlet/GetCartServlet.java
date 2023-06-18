@@ -2,12 +2,14 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Base64;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -72,7 +74,14 @@ public class GetCartServlet extends HttpServlet {
 			 			String description = rs.getString("description");
 			 			String genresString = rs.getString("genre");
 			 		    String[] genreIDs = genresString.split(",");
-			 		   String[] genreNames = new String[genreIDs.length];
+			 		    Blob blob = rs.getBlob("image");
+			 			String image = "";
+			 			if (blob != null) {
+			 				byte[] imageData = blob.getBytes(1, (int) blob.length());
+				 		    image = Base64.getEncoder().encodeToString(imageData);
+			 			}
+			 		    String[] genreNames = new String[genreIDs.length];
+			 		    
 				 		   for (int x = 0; x < genreIDs.length; x++) {
 				 		        try {
 				 		            String sql = "SELECT genre_name FROM book_genre WHERE genre_id = ?";
@@ -94,7 +103,7 @@ public class GetCartServlet extends HttpServlet {
 			 		    int rating = rs.getInt("rating");
 
 		                // Create a Book object
-			 		   	booksInCart.add(new Book(id,title,author,price,quantity,publisher,date,description,isbn, genreNames, rating));
+			 		   	booksInCart.add(new Book(id,title,author,price,quantity,publisher,date,description,isbn, genreNames, rating, image));
 		            }
 		            
 		            // Close the ResultSet and PreparedStatement
