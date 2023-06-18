@@ -1,6 +1,8 @@
 package servlet;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,20 +10,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Base64;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import books.Book;
+import customers.Customer;
 
 /**
  * Servlet implementation class NewBookServlet
  */
 @WebServlet("/UpdateBookServlet")
+@MultipartConfig
 public class UpdateBookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -71,15 +78,27 @@ public class UpdateBookServlet extends HttpServlet {
 			 		String[] genres = request.getParameterValues("genre");
 			 		int rating = Integer.parseInt(request.getParameter("rating"));
 			 		String desc = request.getParameter("desc");
+			 		Part filePart = request.getPart("image");
 			 		
 			 		String genre = "-";
 			 		for (int i = 0; i < genres.length; i++) {
 			 			genre += genres[i] + "-";
 			 		}
+			 		
+			 		// Convert the image to bytes
+			 		InputStream fileInputStream = filePart.getInputStream();
+			        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+			        int bytesRead;
+			        byte[] data = new byte[1024];
+			        while ((bytesRead = fileInputStream.read(data, 0, data.length)) != -1) {
+			            buffer.write(data, 0, bytesRead);
+			        }
+			        byte[] imageBytes = buffer.toByteArray();
+			        String image = Base64.getEncoder().encodeToString(imageBytes);
 
 			 		String sqlStr = 
 			 				"UPDATE books "
-			 				+ "SET title = ?, author = ?, price = ?, quantity = ?, publisher = ?, publication_date = ?, ISBN = ?, genre = ?, rating = ?, description = ? "
+			 				+ "SET title = ?, author = ?, price = ?, quantity = ?, publisher = ?, publication_date = ?, ISBN = ?, genre = ?, rating = ?, description = ?, image = ?  "
 			 				+ "WHERE ISBN = ?";
 			 		PreparedStatement statement = conn.prepareStatement(sqlStr, Statement.RETURN_GENERATED_KEYS);
 			 		statement.setString(1,title);
@@ -92,14 +111,11 @@ public class UpdateBookServlet extends HttpServlet {
 			 		statement.setString(8,genre);
 			 		statement.setInt(9,rating);
 			 		statement.setString(10,desc);
-			 		statement.setString(11,isbn);
-			 		statement.executeUpdate();
-			 		ResultSet rs = statement.getGeneratedKeys();
-			 		int book_id = 0;
-			 		if (rs.next()) {
-			 		    book_id = rs.getInt(1);
-			 		}
+			 		statement.setBytes(11,imageBytes);
+			 		statement.setString(12,isbn);
 			 		
+			 		int rowsUpdated = statement.executeUpdate();
+			 		ResultSet rs = statement.getGeneratedKeys();
 			 		ArrayList<Book> books = (ArrayList<Book>) session.getAttribute("books");
 			 	    for (Book book : books) {
 			 	        if (book.getIsbn().equals(isbn)) {
@@ -112,6 +128,7 @@ public class UpdateBookServlet extends HttpServlet {
 			 	            book.setDescription(desc);
 			 	            book.setGenre(genres);
 			 	            book.setRating(rating);
+			 	            book.setImage(image);
 			 	            break;
 			 	        }
 			 	    }

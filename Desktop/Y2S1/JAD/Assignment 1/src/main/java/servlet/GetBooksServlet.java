@@ -133,7 +133,7 @@ public class GetBooksServlet extends HttpServlet {
 	 		session.setAttribute("books", books);
 	 		session.setAttribute("genres", genres);
 	 		// Step 7: Close connection
-	 		response.sendRedirect("/ST0510_JAD_Assignment_1/books.jsp");
+	 		response.sendRedirect("/ST0510_JAD_Assignment_1/" + request.getParameter("next"));
 	 		conn.close();
 	 	} catch (Exception e) {
 	 		out.println("Error: " + e);

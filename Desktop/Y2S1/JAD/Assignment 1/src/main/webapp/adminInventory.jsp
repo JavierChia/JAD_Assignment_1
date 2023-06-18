@@ -155,7 +155,7 @@
             </div>
             <div class="form-group" id="quantity-group">
 			    <label>Quantity:</label>
-			    <input type="number" id="quantity" name="quantity" required>
+			    <input type="number" id="quantity" name="quantity">
 			</div>
             <div class="form-group">
                 <label>Publisher:</label>
@@ -295,8 +295,9 @@
 			                    </td>
 			                    <td>$<%= book.getPrice() %></td>
 			                    <td><%= book.getQuantity() %></td>
+
 			                    <td class="action-buttons">
-			                    	<button class="edit" onclick="populateForm(`<%= book.getIsbn() %>`, `<%= book.getTitle() %>`, `<%= book.getAuthor() %>`, `<%= book.getPrice() %>`, `<%= book.getQuantity() %>`, `<%= book.getPublisher() %>`, `<%= book.getDate() %>`, `<%= Arrays.toString(book.getGenre()) %>`, `<%= book.getRating() %>`, `<%= book.getDescription() %>`)">Edit</button>
+			                    	<button class="edit" onclick="populateForm(`<%= book.getIsbn() %>`, `<%= book.getTitle() %>`, `<%= book.getAuthor() %>`, `<%= book.getPrice() %>`, `<%= book.getQuantity() %>`, `<%= book.getPublisher() %>`, `<%= book.getDate() %>`, `<%= Arrays.toString(book.getGenre()) %>`, `<%= book.getRating() %>`, `<%= book.getDescription() %>`, `<%= book.getImage() %>`)">Edit</button>
 			                        <form action="/ST0510_JAD_Assignment_1/DeleteBookServlet">
 									    <input type="hidden" name="isbn" value="<%= book.getIsbn() %>">
 									    <button class="delete" type="submit">Delete</button>

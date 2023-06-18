@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import javax.servlet.ServletException;
@@ -90,6 +91,7 @@ public class NewBookServlet extends HttpServlet {
 			            buffer.write(data, 0, bytesRead);
 			        }
 			        byte[] imageBytes = buffer.toByteArray();
+			        String image = Base64.getEncoder().encodeToString(imageBytes);
 
 			 		String sqlStr = 
 			 				"INSERT INTO books"
@@ -105,7 +107,7 @@ public class NewBookServlet extends HttpServlet {
 			 		statement.setString(7,genre);
 			 		statement.setInt(8,rating);
 			 		statement.setString(9,desc);
-			 		statement.setBytes(10, imageBytes);
+			 		statement.setBytes(10,imageBytes);
 			 		statement.executeUpdate();
 			 		ResultSet rs = statement.getGeneratedKeys();
 			 		int book_id = 0;
@@ -113,12 +115,13 @@ public class NewBookServlet extends HttpServlet {
 			 		    book_id = rs.getInt(1);
 			 		}
 			 		ArrayList<Book> books = (ArrayList<Book>) session.getAttribute("books");
-		 			books.add(new Book(books.size()+1, title,author,price,0,publisher,pdate,desc,isbn, genres, rating));
+		 			books.add(new Book(books.size()+1, title,author,price,0,publisher,pdate,desc,isbn, genres, rating, image));
+		 			session.setAttribute("books",books);
 			 		conn.close();
 			 	} catch (Exception e) {
 			 		out.println("Error: " + e);
 			 	}
-//				response.sendRedirect(request.getHeader("referer").split("\\?")[0] + "?statusCode=validCreation");
+				response.sendRedirect(request.getHeader("referer").split("\\?")[0] + "?statusCode=validCreation");
 	}
 
 	/**
