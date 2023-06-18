@@ -23,7 +23,7 @@ import customers.Customer;
 /**
  * Servlet implementation class UpdateCustomerServlet
  */
-@WebServlet("/UpdateCustomerServlet")
+@WebServlet("/AdminUpdateCustomerServlet")
 public class AdminUpdateCustomerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
